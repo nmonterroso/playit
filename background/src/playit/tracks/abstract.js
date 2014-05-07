@@ -9,12 +9,12 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
 			this.dispatcher = _.clone(Backbone.Events);
 			this.preparing = false;
-			this.on_ready(function(track) {}); // kick it
+			this.ready(function(track) {}); // kick it
 		},
 		url: function() {
 			return this.get('url');
 		},
-		on_ready: function(callback) {
+		ready: function(callback) {
 			if (this.get('ready')) {
 				callback(this);
 				return;
