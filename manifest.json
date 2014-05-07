@@ -1,0 +1,21 @@
+{
+	"name": "PlayIt",
+	"version": "1.0",
+	"description": "Create a playlist from multiple sites",
+	"manifest_version": 2,
+	"browser_action": {
+		"default_title": "PlayIt",
+		"default_popup": "popup/templates/popup.html",
+		"default_icon": "popup/images/icon.png"
+	},
+	"background": {
+		"page": "background/background.html"
+	},
+	"permissions": [
+		"contextMenus",
+		"*://youtube.com/watch?v=*",
+		"*://*.youtube.com/watch?v=*",
+		"http://mixing.dj/*/livesets/*",
+		"http://*.zippyshare.com/v/*/file.html"
+	]
+}
