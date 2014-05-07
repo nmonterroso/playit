@@ -2,10 +2,8 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 	'use strict';
 
 	return Backbone.Model.extend({
-		initialize: function() {
-			this.set({
-				list: []
-			});
+		defaults: {
+			list: []
 		},
 		list: function() {
 			return this.get('list');

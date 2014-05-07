@@ -5,11 +5,9 @@ define(['backbone', 'playlist'], function(Backbone, playlist) {
 	// zippyshare use regex somdfunction =([\s\S]*?)</script>
 
 	return Backbone.Model.extend({
-		initialize: function() {
-			this.set({
-				playlists: [new playlist({name: 'Default'})],
-				current_playlist: 0
-			});
+		defaults: {
+			current_playlist: 0,
+			playlists: [new playlist({name: 'Default'})]
 		},
 		playlist: function() {
 			return this.get('playlists')[this.get('current_playlist')];

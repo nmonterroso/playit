@@ -2,11 +2,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 	'use strict';
 
 	var abstract_track = Backbone.Model.extend({
+		defaults: {
+			ready: false
+		},
 		initialize: function() {
-			this.set({
-				ready: false,
-			});
-
 			this.dispatcher = _.clone(Backbone.Events);
 			this.preparing = false;
 			this.ready(function(track) {}); // kick it
