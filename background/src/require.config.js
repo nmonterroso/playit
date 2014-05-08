@@ -1,8 +1,9 @@
 require.config({
 	'paths': {
 		'backbone': 'vendor/backbone-min',
-		'jquery': 'vendor/jquery-2.1.1.min',
-		'underscore': 'vendor/underscore-min', // because backbone depends on it
+		'jquery': 'vendor/jquery-2.1.1.min', // because backbone depends on it
+		'underscore': 'vendor/underscore-min',
+		'q': 'vendor/q',
 
 		// core
 		'player': 'playit/player',
@@ -10,7 +11,8 @@ require.config({
 		'track_factory': 'playit/track_factory',
 
 		// tracks
+		'tracks/abstract': 'playit/tracks/abstract',
 		'tracks/mixing.dj': 'playit/tracks/mixing.dj',
-		'tracks/abstract': 'playit/tracks/abstract'
+		'tracks/zippyshare.com': 'playit/tracks/zippyshare.com'
 	}
 });

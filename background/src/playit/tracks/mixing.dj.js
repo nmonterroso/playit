@@ -1,9 +1,35 @@
-define(['tracks/abstract'], function(abstract_track) {
+define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, $, abstract_track, zippy) {
 	'use strict';
 
 	return abstract_track.extend({
 		prepare: function() {
-			this.dispatcher.trigger(abstract_track.event_types.ready, this);
+			var self = this;
+			var zippy_root;
+
+			Q($.get(this.url()))
+				.then(function(set_page) {
+					var matches = set_page.match(zippy.page_regex);
+
+					if (matches == null) {
+						throw "unable to determine mixing.dj track";
+					}
+
+					zippy_root = matches[1];
+					return $.get(matches[0]);
+				})
+				.then(function(page) {
+					var mp3_href = zippy.parse_page(page);
+
+					self.set('play_url', zippy_root+mp3_href);
+					self.set('ready', true);
+					self.dispatcher.trigger(abstract_track.event_types.ready, self);
+				})
+				.catch(function(e) {
+					console.error(e);
+				})
+				.finally(function() {
+					self.preparing = false;
+				});
 		}
 	}, {
 		can_play: function(url) {
