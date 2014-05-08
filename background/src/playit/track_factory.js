@@ -19,7 +19,7 @@ define(
 					return null;
 				}
 
-				return new detected_type({url: url});
+				return new detected_type({source_url: url});
 			}
 		});
 

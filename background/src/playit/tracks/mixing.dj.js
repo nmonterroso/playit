@@ -6,7 +6,7 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 			var self = this;
 			var zippy_root;
 
-			Q($.get(this.url()))
+			Q($.get(this.source_url()))
 				.then(function(set_page) {
 					var matches = set_page.match(zippy.page_regex);
 

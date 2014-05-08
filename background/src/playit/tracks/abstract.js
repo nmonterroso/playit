@@ -3,15 +3,20 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
 	var abstract_track = Backbone.Model.extend({
 		defaults: {
-			ready: false
+			ready: false,
+			source_url: null,
+			play_url: null
 		},
 		initialize: function() {
 			this.dispatcher = _.clone(Backbone.Events);
 			this.preparing = false;
 			this.ready(function(track) {}); // kick it
 		},
-		url: function() {
-			return this.get('url');
+		source_url: function() {
+			return this.get('source_url');
+		},
+		play_url: function() {
+			return this.get('play_url');
 		},
 		ready: function(callback) {
 			if (this.get('ready')) {
@@ -30,6 +35,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 		// abstract methods
 		prepare: function() {
 			abstract_track.unimplemented('prepare');
+		},
+		play: function() {
+			abstract_track.unimplemented('play');
 		}
 	}, {
 		event_types: {

@@ -14,6 +14,12 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 			if (track != null) {
 				this.list().push(track);
 			}
+
+			if (this.list().length == 1) {
+				track.ready(function() {
+					track.play();
+				});
+			}
 		},
 		clear: function() {
 			this.set({list: []});
