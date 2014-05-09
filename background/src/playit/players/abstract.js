@@ -6,7 +6,6 @@ define(['backbone'], function(Backbone) {
 			console.error('unimplemented method', method);
 			throw '';
 		},
-		player: null,
 		play: function(url) {
 			this.unimplemented('play');
 		},
