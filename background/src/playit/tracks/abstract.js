@@ -1,4 +1,4 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jplayer) {
 	'use strict';
 
 	var abstract_track = Backbone.Model.extend({
@@ -38,12 +38,15 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
 				switch (self.play_type()) {
 					case abstract_track.play_type_jplayer:
-						console.log('playing in jplayer', self.source_url());
+						player = jplayer;
 						break;
 					case abstract_track.play_type_youtube:
 						console.log('playing in youtube', self.source_url());
+						return;
 						break;
 				}
+
+				player.play(self.play_url());
 			});
 		},
 		play_type: function() {
@@ -65,7 +68,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 		},
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);
-			throw "";
+			throw '';
 		},
 		can_play: function(url) {
 			return false;
