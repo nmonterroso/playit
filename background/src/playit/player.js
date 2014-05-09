@@ -17,7 +17,7 @@ define(['backbone', 'playlist'], function(Backbone, playlist) {
 				this.clear();
 			}
 
-			this.playlist().add(url);
+			this.playlist().add(url, next);
 		}
 	});
 });

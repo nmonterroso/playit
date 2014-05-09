@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
 		'contexts': ['link'],
 		'targetUrlPatterns': perm_list
 	});
-	
+
 	chrome.contextMenus.create({
 		'id': 'next',
 		'title': 'Next',

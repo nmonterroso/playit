@@ -17,10 +17,10 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 				} else {
 					this.list().push(track);
 				}
-			}
 
-			if (this.list().length == 1) {
-				track.play();
+				if (this.list().length == 1) {
+					track.play();
+				}
 			}
 		},
 		clear: function() {

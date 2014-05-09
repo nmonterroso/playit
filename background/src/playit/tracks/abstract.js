@@ -65,6 +65,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 		},
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);
+			throw "";
 		},
 		can_play: function(url) {
 			return false;
