@@ -5,6 +5,8 @@ define(['player'], function(player) {
 
 	chrome.contextMenus.onClicked.addListener(function(item) {
 		var clear = item.menuItemId == 'now';
-		playit.play(item.linkUrl, clear);
+		var next = item.menuItemId == 'next';
+
+		playit.play(item.linkUrl, next, clear);
 	});
 });

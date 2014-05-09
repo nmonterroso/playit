@@ -8,17 +8,19 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 		list: function() {
 			return this.get('list');
 		},
-		add: function(url) {
+		add: function(url, next) {
 			var track = track_factory(url);
 
 			if (track != null) {
-				this.list().push(track);
+				if (next) {
+					this.list().splice(1, 0, track);
+				} else {
+					this.list().push(track);
+				}
 			}
 
 			if (this.list().length == 1) {
-				track.ready(function() {
-					track.play();
-				});
+				track.play();
 			}
 		},
 		clear: function() {

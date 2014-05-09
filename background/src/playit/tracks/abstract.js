@@ -5,7 +5,8 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 		defaults: {
 			ready: false,
 			source_url: null,
-			play_url: null
+			play_url: null,
+			unplayable: false
 		},
 		initialize: function() {
 			this.dispatcher = _.clone(Backbone.Events);
@@ -31,15 +32,34 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 				this.prepare();
 			}
 		},
+		play: function() {
+			this.ready(function(self) {
+				var player;
+
+				switch (self.play_type()) {
+					case abstract_track.play_type_jplayer:
+						console.log('playing in jplayer', self.source_url());
+						break;
+					case abstract_track.play_type_youtube:
+						console.log('playing in youtube', self.source_url());
+						break;
+				}
+			});
+		},
+		play_type: function() {
+			return abstract_track.play_type_jplayer;
+		},
 
 		// abstract methods
 		prepare: function() {
 			abstract_track.unimplemented('prepare');
 		},
-		play: function() {
-			abstract_track.unimplemented('play');
+		start: function() {
+			abstract_track.unimplemented('start');
 		}
 	}, {
+		play_type_jplayer: 'jplayer',
+		play_type_youtube: 'youtube',
 		event_types: {
 			ready: 'ready'
 		},
