@@ -11,15 +11,15 @@ chrome.runtime.onInstalled.addListener(function(details) {
 
 	// TODO: add icons
 	chrome.contextMenus.create({
-		'id': 'next',
-		'title': 'Next',
+		'id': 'last',
+		'title': 'Last',
 		'contexts': ['link'],
 		'targetUrlPatterns': perm_list
 	});
-
+	
 	chrome.contextMenus.create({
-		'id': 'last',
-		'title': 'Last',
+		'id': 'next',
+		'title': 'Next',
 		'contexts': ['link'],
 		'targetUrlPatterns': perm_list
 	});
