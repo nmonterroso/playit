@@ -10,21 +10,21 @@ require.config({
 		'jquery.jplayer': 'vendor/jquery.jplayer.min',
 
 		// core
-		'player': 'playit/player',
-		'playlist': 'playit/playlist',
+		'player': 'models/player',
+		'playlist': 'models/playlist',
 
 		// utility
-		'util/track_factory': 'playit/util/track_factory',
-		'util/guid': 'playit/util/guid',
+		'util/track_factory': 'models/util/track_factory',
+		'util/guid': 'models/util/guid',
 
 		// tracks
-		'tracks/abstract': 'playit/tracks/abstract',
-		'tracks/mixing.dj': 'playit/tracks/mixing.dj',
-		'tracks/zippyshare.com': 'playit/tracks/zippyshare.com',
+		'tracks/abstract': 'models/tracks/abstract',
+		'tracks/mixing.dj': 'models/tracks/mixing.dj',
+		'tracks/zippyshare.com': 'models/tracks/zippyshare.com',
 
 		// players
-		'players/abstract': 'playit/players/abstract',
-		'players/jplayer': 'playit/players/jplayer'
+		'players/abstract': 'models/players/abstract',
+		'players/jplayer': 'models/players/jplayer'
 	},
 	'shim': {
 		'swfobject': {
