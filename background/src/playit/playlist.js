@@ -3,10 +3,14 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 
 	return Backbone.Model.extend({
 		defaults: {
-			list: []
+			list: [],
+			current_track: 0
 		},
 		list: function() {
 			return this.get('list');
+		},
+		current: function() {
+			return this.get('current_track');
 		},
 		add: function(url, next) {
 			var track = track_factory(url);
@@ -19,12 +23,23 @@ define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_
 				}
 
 				if (this.list().length == 1) {
-					track.play();
+					this.play();
 				}
 			}
 		},
 		clear: function() {
 			this.set({list: []});
+		},
+		play: function() {
+			this.list()[this.current()].play();
+		},
+		play_next: function() {
+			this.set({current_track: this.current() + 1});
+			this.play();
+		},
+		play_prev: function() {
+			this.set({current_track: this.current() - 1});
+			this.play();
 		}
 	});
 });

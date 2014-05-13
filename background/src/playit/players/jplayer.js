@@ -15,12 +15,15 @@ define(['jquery', 'players/abstract', 'jquery.jplayer'], function($, abstract_pl
 				$('#player_jplayer').jPlayer({
 					ready: function() {
 						self.player = $(this);
-						cb(url);
+						cb();
 					},
-					swfPath: '/background/src/vendor/Jplayer.swf'
+					swfPath: '/background/src/vendor/Jplayer.swf',
+					ended: function(){
+						abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
+					}
 				});
 			} else {
-				cb(url);
+				cb();
 			}
 		},
 		pause: function() {
