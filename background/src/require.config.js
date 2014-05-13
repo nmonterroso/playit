@@ -12,7 +12,10 @@ require.config({
 		// core
 		'player': 'playit/player',
 		'playlist': 'playit/playlist',
-		'track_factory': 'playit/track_factory',
+
+		// utility
+		'util/track_factory': 'playit/util/track_factory',
+		'util/guid': 'playit/util/guid',
 
 		// tracks
 		'tracks/abstract': 'playit/tracks/abstract',

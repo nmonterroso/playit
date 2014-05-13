@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'track_factory'], function(_, Backbone, track_factory) {
+define(['underscore', 'backbone', 'util/track_factory'], function(_, Backbone, track_factory) {
 	'use strict';
 
 	return Backbone.Model.extend({
