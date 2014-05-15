@@ -42,6 +42,9 @@ define(
 
 				this.playlist().add(url, next);
 			},
+			play_at: function(index) {
+				this.playlist().play_at(index);
+			},
 			play_next: function() {
 				this.playlist().play_next();
 			},

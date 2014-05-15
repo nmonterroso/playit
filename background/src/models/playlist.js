@@ -52,6 +52,10 @@ define(
 				var track = this.tracks.get(this.list()[this.current()]);
 				track.play();
 			},
+			play_at: function(index) {
+				this.set({current_track: index});
+				this.play();
+			},
 			play_next: function() {
 				this.set({current_track: this.current() + 1});
 				this.play();
