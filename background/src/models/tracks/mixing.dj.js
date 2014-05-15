@@ -20,8 +20,10 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 				.then(function(page) {
 					var mp3_href = zippy.parse_page(page);
 
-					self.set('play_url', zippy_root+mp3_href);
-					self.set('ready', true);
+					self.set({
+						play_url: zippy_root+mp3_href,
+						ready: true
+					});
 					self.dispatcher.trigger(abstract_track.event_types.ready, self);
 				})
 				.catch(function(e) {

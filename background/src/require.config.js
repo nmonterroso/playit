@@ -1,6 +1,7 @@
 require.config({
 	'paths': {
-		'backbone': 'vendor/backbone-min',
+		'backbone': 'vendor/backbone',
+		'localstorage': 'vendor/backbone.localStorage',
 		'jquery': 'vendor/jquery-2.1.1.min', // because backbone depends on it
 		'underscore': 'vendor/underscore-min',
 		'q': 'vendor/q',
@@ -13,9 +14,9 @@ require.config({
 		'player': 'models/player',
 		'playlist': 'models/playlist',
 
-		// utility
-		'util/track_factory': 'models/util/track_factory',
-		'util/guid': 'models/util/guid',
+		// collections
+		'collections/playlist': 'collections/playlist',
+		'collections/track': 'collections/track',
 
 		// tracks
 		'tracks/abstract': 'models/tracks/abstract',
