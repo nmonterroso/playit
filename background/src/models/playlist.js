@@ -7,12 +7,15 @@ define(
 	function(_, Backbone, track_collection) {
 		'use strict';
 
-		return Backbone.Model.extend({
+		var playlist = Backbone.Model.extend({
 			defaults: {
 				current_track: 0,
 				list: []
 			},
 			tracks: track_collection,
+			initialize: function() {
+				playlist.all_playlists.push(this);
+			},
 			list: function() {
 				return this.get('list');
 			},
@@ -42,7 +45,7 @@ define(
 			},
 			clear: function() {
 				this.set({list: []});
-				this.tracks.remove(this.tracks.models); //TODO: only remove tracks that are not in any playlist
+				playlist.remove_orphans();
 			},
 			play: function() {
 				var track = this.tracks.get(this.list()[this.current()]);
@@ -56,6 +59,22 @@ define(
 				this.set({current_track: this.current() - 1});
 				this.play();
 			}
+		}, {
+			all_playlists: [],
+			collection: track_collection,
+			remove_orphans: function() {
+				var in_use_ids = _.union(_.flatten(_.map(this.all_playlists, function(playlist) {
+					return playlist.list();
+				})));
+
+				var unused_tracks = this.collection.filter(function(track) {
+					return _.indexOf(track.id, in_use_ids) == -1;
+				});
+
+				this.collection.remove(unused_tracks);
+			}
 		});
+
+		return playlist;
 	}
 );
