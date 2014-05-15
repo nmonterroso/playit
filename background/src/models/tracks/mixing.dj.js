@@ -5,6 +5,8 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 		prepare: function() {
 			var self = this;
 			var zippy_root;
+			var title = null;
+			var image = null;
 
 			Q($.get(this.source_url()))
 				.then(function(set_page) {
@@ -12,6 +14,16 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 
 					if (matches == null) {
 						throw "unable to determine mixing.dj track";
+					}
+
+					var title_matches = set_page.match((/<meta property="og:title" content="(.*?)"\/>/));
+					if (title_matches) {
+						title = title_matches[1];
+					}
+
+					var image_matches = set_page.match(/<link rel="image_src" href="(.*?)" \/>/);
+					if (image_matches) {
+						image = image_matches[1];
 					}
 
 					zippy_root = matches[1];
@@ -22,7 +34,9 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 
 					self.set({
 						play_url: zippy_root+mp3_href,
-						ready: true
+						ready: true,
+						title: title,
+						image: image
 					});
 					self.dispatcher.trigger(abstract_track.event_types.ready, self);
 				})

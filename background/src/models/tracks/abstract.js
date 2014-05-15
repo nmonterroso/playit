@@ -6,7 +6,9 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 			ready: false,
 			source_url: null,
 			play_url: null,
-			unplayable: false
+			unplayable: false,
+			image: null,
+			title: null
 		},
 		initialize: function() {
 			this.dispatcher = _.clone(Backbone.Events);
