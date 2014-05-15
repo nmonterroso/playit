@@ -36,6 +36,9 @@ define(
 					track = this.get_collection().create({
 						source_url: url
 					});
+					track.on('change', function(track) {
+						track.collection.sync('update', track);
+					});
 				} catch (e) {
 					console.error(e);
 					return;

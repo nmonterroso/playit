@@ -16,8 +16,9 @@ define(
 			},
 			initialize: function() {
 				this.localStorage = new localstorage('Tracks-'+this.playlist_id);
-				this.on('remove', this._remove, this);
-				this.on('change', this._save, this);
+				this.on('remove', function(track) {
+					this.sync('delete', track);
+				}, this);
 			},
 			model: function(attrs, options) {
 				if (!attrs.source_url) {
@@ -32,18 +33,7 @@ define(
 					throw "unable to determine track type"+attrs.source_url;
 				}
 
-				var track = new detected_type(attrs, options);
-
-				track.on('change', function(track) {
-					track.collection.sync('update', track);
-				});
-				return track;
-			},
-			_remove: function(track) {
-				this.localStorage.destroy(track);
-			},
-			_save: function() {
-				this.localStorage.save();
+				return new detected_type(attrs, options);
 			}
 		});
 	}
