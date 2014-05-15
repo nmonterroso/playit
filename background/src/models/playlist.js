@@ -10,56 +10,42 @@ define(
 		return Backbone.Model.extend({
 			defaults: {
 				current_track: 0,
-				ordered_list: []
+				list: []
 			},
-			initialize: function() {
-				this.track_collection = null;
-			},
-			get_collection: function() {
-				if (this.track_collection == null) {
-					this.track_collection = new track_collection(this.id);
-					this.track_collection.fetch();
-				}
-
-				return this.track_collection;
-			},
+			tracks: track_collection,
 			list: function() {
-				return this.get('ordered_list');
+				return this.get('list');
 			},
 			current: function() {
 				return this.get('current_track');
 			},
 			add: function(url, next) {
-				var track;
+				var track = this.tracks.create_track(url);
 
-				try {
-					track = this.get_collection().create({
-						source_url: url
-					});
-					track.on('change', function(track) {
-						track.collection.sync('update', track);
-					});
-				} catch (e) {
-					console.error(e);
+				if (track == null) {
+					// TODO: display failure to user
 					return;
 				}
 
-				if (next && this.get_collection().size > 0) {
-					this.list().splice(1, 0, track.id);
+				var list = _.clone(this.list());
+				if (next && list.length > 1) {
+					list.splice(1, 0, track.id);
 				} else {
-					this.list().push(track.id);
+					list.push(track.id);
 				}
+
+				this.set('list', list);
 
 				if (this.list().length == 1) {
 					this.play();
 				}
 			},
 			clear: function() {
-				this.set({ordered_list: []});
-				this.get_collection().remove(this.get_collection().models);
+				this.set({list: []});
+				this.tracks.remove(this.tracks.models); //TODO: only remove tracks that are not in any playlist
 			},
 			play: function() {
-				var track = this.get_collection().get(this.list()[this.current()]);
+				var track = this.tracks.get(this.list()[this.current()]);
 				track.play();
 			},
 			play_next: function() {

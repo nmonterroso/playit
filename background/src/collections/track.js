@@ -3,19 +3,16 @@ define(
 		'underscore',
 		'backbone',
 		'localstorage',
+		'collections/abstract',
 		'tracks/mixing.dj',
 		'tracks/zippyshare.com',
 	],
-	function(_, Backbone, localstorage, mixing_dj, zippyshare) {
+	function(_, Backbone, localstorage, abstract_collection, mixing_dj, zippyshare) {
 		'use strict';
 
-		return Backbone.Collection.extend({
-			constructor: function() {
-				this.playlist_id = arguments[0];
-				Backbone.Collection.apply(this, _.rest(arguments));
-			},
+		var collection = new (abstract_collection.extend({
+			localStorage: new localstorage('tracks'),
 			initialize: function() {
-				this.localStorage = new localstorage('Tracks-'+this.playlist_id);
 				this.on('remove', function(track) {
 					this.sync('delete', track);
 				}, this);
@@ -34,7 +31,26 @@ define(
 				}
 
 				return new detected_type(attrs, options);
+			},
+			create_track: function(source_url) {
+				var track = this.findWhere({ source_url: source_url });
+
+				if (!track) {
+					try {
+						track = this.create({ source_url: source_url })
+					} catch (e) {
+						console.error(e);
+						return null;
+					}
+				}
+
+				this.bind_change(track);
+				return track;
 			}
-		});
+		}))();
+
+		collection.fetch();
+		collection.bind_change();
+		return collection;
 	}
 );

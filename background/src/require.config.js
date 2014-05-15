@@ -15,6 +15,7 @@ require.config({
 		'playlist': 'models/playlist',
 
 		// collections
+		'collections/abstract': 'collections/abstract',
 		'collections/playlist': 'collections/playlist',
 		'collections/track': 'collections/track',
 
