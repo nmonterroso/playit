@@ -1,9 +1,11 @@
 require.config({
 	'paths': {
+		// common
+		'underscore': '/common/underscore-min',
+		'jquery': '/common/jquery-2.1.1.min',
+
 		'backbone': 'vendor/backbone',
 		'localstorage': 'vendor/backbone.localStorage',
-		'jquery': '/common/jquery-2.1.1.min', // because backbone depends on it
-		'underscore': '/common/underscore-min',
 		'q': 'vendor/q',
 		'swfobject': 'vendor/swfobject',
 
@@ -13,6 +15,7 @@ require.config({
 		// core
 		'player': 'models/player',
 		'playlist': 'models/playlist',
+		'chrome_service': 'models/chrome_service',
 
 		// collections
 		'collections/abstract': 'collections/abstract',

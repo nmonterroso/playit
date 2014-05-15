@@ -1,9 +1,18 @@
-<html>
+<html ng-csp>
 <head lang="en">
-    <title>PlayIt</title>
-    <script src="/popup/js/main.js"></script>
+  <title>PlayIt</title>
+  <script data-main="/popup/src/main.js" src="/common/require.js"></script>
+  <script src="/popup/src/require.config.js"></script>
+
+  <link rel="stylesheet" href="/popup/css/angular-csp.css" />
 </head>
 <body>
+
+<div ng-controller="player_controller">
+</div>
+<div ng-controller="current_playlist_controller">
+
+</div>
 
 </body>
 </html>
