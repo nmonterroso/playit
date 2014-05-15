@@ -3,7 +3,7 @@ require.config({
 		'backbone': 'vendor/backbone',
 		'localstorage': 'vendor/backbone.localStorage',
 		'jquery': '/common/jquery-2.1.1.min', // because backbone depends on it
-		'underscore': 'vendor/underscore-min',
+		'underscore': '/common/underscore-min',
 		'q': 'vendor/q',
 		'swfobject': 'vendor/swfobject',
 
