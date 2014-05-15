@@ -12,7 +12,7 @@ define(['jquery', 'players/abstract', 'jquery.jplayer'], function($, abstract_pl
 			};
 
 			if (this.player == null) {
-				$('#player_jplayer').jPlayer({
+				$('#jplayer').jPlayer({
 					ready: function() {
 						self.player = $(this);
 						cb();

@@ -2,7 +2,7 @@ require.config({
 	'paths': {
 		'backbone': 'vendor/backbone',
 		'localstorage': 'vendor/backbone.localStorage',
-		'jquery': 'vendor/jquery-2.1.1.min', // because backbone depends on it
+		'jquery': '/common/jquery-2.1.1.min', // because backbone depends on it
 		'underscore': 'vendor/underscore-min',
 		'q': 'vendor/q',
 		'swfobject': 'vendor/swfobject',
