@@ -13,9 +13,6 @@ define(
 				list: []
 			},
 			tracks: track_collection,
-			initialize: function() {
-				playlist.all_playlists.push(this);
-			},
 			list: function() {
 				return this.get('list');
 			},
@@ -72,7 +69,7 @@ define(
 				})));
 
 				var unused_tracks = this.collection.filter(function(track) {
-					return _.indexOf(track.id, in_use_ids) == -1;
+					return _.indexOf(in_use_ids, track.id) == -1;
 				});
 
 				this.collection.remove(unused_tracks);
