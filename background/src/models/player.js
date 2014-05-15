@@ -10,16 +10,22 @@ define(
 
 		return Backbone.Model.extend({
 			defaults: {
-				current_playlist: 0
+				current_playlist: 0,
+				id: 'main'
 			},
-			localStorage: new localstorage('player_state'),
+			localStorage: new localstorage('player'),
 			playlists: playlist_collection,
 			initialize: function() {
 				this.fetch();
 
 				if (this.playlists.size() == 0) {
 					this.playlists.create_playlist('Default');
+					this.localStorage.create(this);
 				}
+
+				this.on('change', function(player) {
+					this.sync('update', player);
+				}, this);
 
 				abstract_track.dispatcher.on(abstract_track.event_types.playback_complete, this.play_next, this);
 			},
