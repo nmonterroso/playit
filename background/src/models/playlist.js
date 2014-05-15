@@ -43,6 +43,10 @@ define(
 					this.play();
 				}
 			},
+			remove: function(id) {
+				this.set('list', _.without(this.list(), id));
+				playlist.remove_orphans();
+			},
 			clear: function() {
 				this.set({list: []});
 				playlist.remove_orphans();
