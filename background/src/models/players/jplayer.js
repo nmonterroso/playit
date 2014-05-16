@@ -2,10 +2,9 @@ define(
 	[
 		'jquery',
 		'players/abstract',
-		'tracks/abstract',
 		'jquery.jplayer'
 	],
-	function($, abstract_player, abstract_track) {
+	function($, abstract_player) {
 		'use strict';
 
 		return abstract_player.extend({}, {
@@ -28,7 +27,7 @@ define(
 						},
 						swfPath: '/background/src/vendor/Jplayer.swf',
 						ended: function(){
-							abstract_track.dispatcher.trigger(abstract_track.event_types.playback_complete);
+							abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
 						}
 					});
 				} else {
@@ -96,8 +95,8 @@ define(
 				return {
 					state: this.current_player_state,
 					duration: {
-						current: status.currentTime,
-						total: status.duration
+						current: abstract_player.format_time(status.currentTime),
+						total: abstract_player.format_time(status.duration)
 					},
 					volume: {
 						level: this.player.jPlayer('option', 'volume')*100,

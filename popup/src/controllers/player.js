@@ -11,31 +11,14 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 			$scope.track_status = {
 				state: 'stop',
 				duration: {
-					current: 0,
-					total: 0
+					current: '0:00',
+					total: '0:00'
 				}
 			};
 
 			$scope.volume = {
 				level: 80,
 				muted: false
-			};
-
-			$scope.transform_time = function(time) {
-				// get hours
-				var hours = Math.floor(time / (60*60));
-				var minutes = Math.floor((time % (60*60))/60);
-				var seconds = Math.floor(time % 60);
-
-				if (minutes < 10) {
-					minutes = '0'+minutes;
-				}
-
-				if (seconds < 10) {
-					seconds = '0'+seconds;
-				}
-
-				return hours+':'+minutes+':'+seconds;
 			};
 
 			$scope.seek = function(value) {

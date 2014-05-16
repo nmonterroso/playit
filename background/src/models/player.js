@@ -3,9 +3,9 @@ define(
 		'backbone',
 		'localstorage',
 		'collections/playlist',
-		'tracks/abstract'
+		'players/abstract'
 	],
-	function(Backbone, localstorage, playlist_collection, abstract_track) {
+	function(Backbone, localstorage, playlist_collection, abstract_player) {
 		'use strict';
 
 		return Backbone.Model.extend({
@@ -27,7 +27,7 @@ define(
 					this.sync('update', player);
 				}, this);
 
-				abstract_track.dispatcher.on(abstract_track.event_types.playback_complete, this.play_next, this);
+				abstract_player.dispatcher.on(abstract_player.event_types.playback_complete, this.play_next, this);
 			},
 			playlist: function() {
 				return this.playlists.at(this.get('current_playlist'));

@@ -69,10 +69,8 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 		play_type_jplayer: 'jplayer',
 		play_type_youtube: 'youtube',
 		event_types: {
-			ready: 'ready',
-			playback_complete: 'playback_complete'
+			ready: 'ready'
 		},
-		dispatcher: _.clone(Backbone.Events),
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);
 			throw '';
