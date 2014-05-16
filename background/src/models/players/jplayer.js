@@ -37,6 +37,7 @@ define(
 						volume: default_volume,
 						swfPath: '/background/src/vendor/Jplayer.swf',
 						ended: function(){
+							self.current_player_state = self.player_state.stop;
 							abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
 						}
 					});

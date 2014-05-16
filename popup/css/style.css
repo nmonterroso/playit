@@ -73,7 +73,7 @@ body {
 	position: absolute;
 	top: 20px;
 	left: -5px;
-	border: 1px solid black;
+	border: 1px solid rgba(165, 164, 164, 0.72);
 	padding: 3px;
 	border-radius: 10px;
 }
