@@ -125,7 +125,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 
 					var volume_slider_container = $(element).find('.volume_slider_container').hide();
 					$(element).find('.volume_control > img').click(function() {
-						volume_slider_container.toggle();
+						volume_slider_container.slideToggle(75);
 					});
 
 					$scope.$watch('track_status.duration', function() {

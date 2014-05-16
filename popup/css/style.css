@@ -68,5 +68,21 @@ body {
 }
 
 #player .volume_slider_container {
+	z-index: 20;
+	background-color: white;
 	position: absolute;
+	top: 20px;
+	left: -5px;
+	border: 1px solid black;
+	padding: 3px;
+	border-radius: 10px;
+}
+
+#player .volume_slider_container img {
+	position: relative;
+	left: 1px;
+}
+
+#player .volume_slider {
+	margin: 0 auto 4px;
 }

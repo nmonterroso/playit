@@ -620,6 +620,11 @@ button.ui-button::-moz-focus-inner {
 	height: 15px;
 	cursor: default;
 }
+.ui-slider.ui-slider-vertical .ui-slider-handle {
+	width: 15px;
+	height: 5px;
+}
+
 .ui-slider .ui-slider-range {
 	position: absolute;
 	z-index: 1;
@@ -654,13 +659,13 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-slider-vertical {
-	width: .8em;
+	width: 5px;
 	height: 100px;
 }
 .ui-slider-vertical .ui-slider-handle {
-	left: -.3em;
+	left: -6px;
 	margin-left: 0;
-	margin-bottom: -.6em;
+	margin-bottom: -5px;
 }
 .ui-slider-vertical .ui-slider-range {
 	left: 0;
