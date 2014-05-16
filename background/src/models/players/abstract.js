@@ -8,13 +8,14 @@ define(['backbone', 'underscore', 'jquery', 'jquery.jplayer'], function(Backbone
 		current_player_state: 'stop',
 		dispatcher: _.clone(Backbone.Events),
 		event_types: {
-			playback_complete: 'playback_complete'
+			playback_complete: 'playback_complete',
+			set_volume: 'set_volume'
 		},
 		default_state: {
 			state: 'stop',
 			duration: {
-				current: 0,
-				total: 0
+				current: '0:00:00',
+				total: '0:00:00'
 			},
 			volume: {
 				level: 80,

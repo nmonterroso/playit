@@ -29,6 +29,7 @@ define(
 				}, this);
 
 				abstract_player.dispatcher.on(abstract_player.event_types.playback_complete, this.play_next, this);
+				abstract_player.dispatcher.trigger(abstract_player.event_types.set_volume, this.get('volume'));
 			},
 			set_volume: function(level) {
 				this.set('volume', level);

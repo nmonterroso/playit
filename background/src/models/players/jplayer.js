@@ -7,6 +7,15 @@ define(
 	function($, abstract_player) {
 		'use strict';
 
+		var default_volume = .8;
+		var convert_volume = function(level) {
+			return level / 100;
+		};
+
+		abstract_player.dispatcher.on(abstract_player.event_types.set_volume, function(level) {
+			default_volume = convert_volume(level);
+		});
+
 		return abstract_player.extend({}, {
 			play: function(url) {
 				var self = this;
@@ -25,6 +34,7 @@ define(
 							self.player = $(this);
 							cb();
 						},
+						volume: default_volume,
 						swfPath: '/background/src/vendor/Jplayer.swf',
 						ended: function(){
 							abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
@@ -70,8 +80,7 @@ define(
 					return;
 				}
 
-				level /= 100;
-				this.player.jPlayer('volume', level);
+				this.player.jPlayer('volume', convert_volume(level));
 			},
 			mute: function() {
 				if (this.player == null) {

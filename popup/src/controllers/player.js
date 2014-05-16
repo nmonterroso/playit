@@ -11,8 +11,8 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 			$scope.track_status = {
 				state: 'stop',
 				duration: {
-					current: '0:00',
-					total: '0:00'
+					current: '0:00:00',
+					total: '0:00:00'
 				}
 			};
 
@@ -52,7 +52,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 			};
 
 			$scope.set_volume = function(level) {
-				chrome.query(chrome.type_track_player, 'volume', level, function() {
+				chrome.query(chrome.type_playit, 'set_volume', level, function() {
 					refresh();
 				});
 			};
@@ -119,7 +119,9 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 						max: 100,
 						value: $scope.volume.level,
 						change: function(event, ui) {
-							$scope.set_volume(ui.value);
+							if (event.originalEvent) {
+								$scope.set_volume(ui.value);
+							}
 						}
 					});
 
@@ -131,6 +133,10 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 					$scope.$watch('track_status.duration', function() {
 						seekbar.slider('option', 'max', $scope.track_status.duration.total);
 						seekbar.slider('option', 'value', $scope.track_status.duration.current);
+					});
+
+					$scope.$watch('volume', function() {
+						volume_slider.slider('option', 'value', $scope.volume.level);
 					});
 				}
 			};
