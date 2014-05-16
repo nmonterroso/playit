@@ -57,6 +57,11 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 		play_type: function() {
 			return abstract_track.play_type_jplayer;
 		},
+		unplayable: function() {
+			console.error("unable to play track from "+this.source_url());
+			this.set('unplayable', true);
+			this.collection.dispatcher.trigger(abstract_track.event_types.unplayable, this);
+		},
 
 		// abstract methods
 		prepare: function() {
@@ -69,7 +74,8 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 		play_type_jplayer: 'jplayer',
 		play_type_youtube: 'youtube',
 		event_types: {
-			ready: 'ready'
+			ready: 'ready',
+			unplayable: 'unplayable'
 		},
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);

@@ -41,8 +41,7 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 					self.dispatcher.trigger(abstract_track.event_types.ready, self);
 				})
 				.catch(function(e) {
-					self.set('unplayable', true);
-					console.error(e);
+					self.unplayable();
 				})
 				.finally(function() {
 					self.preparing = false;

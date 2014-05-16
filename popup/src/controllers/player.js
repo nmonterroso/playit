@@ -3,11 +3,35 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 
 	ng.module('playit.controllers')
 		.controller('player_controller', ['$scope', '$interval', 'chrome_service', function($scope, $interval, chrome) {
-			$scope.track = {
+			var status_interval;
+			var default_track = {
 				image: '/popup/images/track_empty.jpg',
-				title: null
+				title: 'Loading...'
 			};
 
+			var refresh = function() {
+				chrome.query(chrome.type_playlist, 'track', function(track) {
+					$scope.$apply(function() {
+						$scope.track = track == null ? default_track : track;
+					});
+
+					if (status_interval) {
+						$interval.cancel(status_interval);
+					}
+
+					status_interval = $interval(function() {
+						chrome.query(chrome.type_track_player, 'track_state', function(status) {
+							$scope.$apply(function() {
+								$scope.track_status.state = status.state;
+								$scope.track_status.duration = status.duration;
+								$scope.volume = status.volume;
+							});
+						});
+					}, 300);
+				});
+			};
+
+			$scope.track = default_track;
 			$scope.track_status = {
 				state: 'stop',
 				duration: {
@@ -75,30 +99,6 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				$scope.volume.muted = false;
 				chrome.query(chrome.type_track_player, 'unmute', function() {
 					refresh();
-				});
-			};
-
-			var status_interval;
-
-			var refresh = function() {
-				chrome.query(chrome.type_playlist, 'track', function(track) {
-					$scope.$apply(function() {
-						$scope.track = track;
-					});
-
-					if (status_interval) {
-						$interval.cancel(status_interval);
-					}
-
-					status_interval = $interval(function() {
-						chrome.query(chrome.type_track_player, 'track_state', function(status) {
-							$scope.$apply(function() {
-								$scope.track_status.state = status.state;
-								$scope.track_status.duration = status.duration;
-								$scope.volume = status.volume;
-							});
-						});
-					}, 300);
 				});
 			};
 

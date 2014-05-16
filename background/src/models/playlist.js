@@ -2,9 +2,10 @@ define(
 	[
 		'underscore',
 		'backbone',
-		'collections/track'
+		'collections/track',
+		'tracks/abstract'
 	],
-	function(_, Backbone, track_collection) {
+	function(_, Backbone, track_collection, abstract_track) {
 		'use strict';
 
 		var playlist = Backbone.Model.extend({
@@ -13,6 +14,12 @@ define(
 				list: []
 			},
 			tracks: track_collection,
+			initialize: function() {
+				var self = this;
+				this.tracks.dispatcher.on(abstract_track.event_types.unplayable, function(track) {
+					self.remove(track.id);
+				});
+			},
 			list: function() {
 				return this.get('list');
 			},
@@ -44,6 +51,15 @@ define(
 				}
 			},
 			remove: function(id) {
+				var position = _.indexOf(this.list(), id);
+				if (position == -1) {
+					return;
+				}
+
+				if (position == this.current() && position > 0 && position == this.list().length - 1) {
+					this.set({current_track: this.current() - 1});
+				}
+
 				this.set('list', _.without(this.list(), id));
 				playlist.remove_orphans(this.collection);
 			},
@@ -61,7 +77,7 @@ define(
 			},
 			play_next: function() {
 				var next = this.current() + 1;
-				if (next >= this.tracks.size()) {
+				if (next >= this.list().length) {
 					return;
 				}
 
@@ -74,7 +90,7 @@ define(
 					return;
 				}
 
-				this.set({current_track: this.current() - 1});
+				this.set({current_track: prev});
 				this.play();
 			},
 
@@ -93,7 +109,12 @@ define(
 				})));
 
 				var unused_tracks = this.track_collection.filter(function(track) {
-					return _.indexOf(in_use_ids, track.id) == -1;
+					if (_.indexOf(in_use_ids, track.id) == -1) {
+						console.log('unused track: '+track.id+' - '+track.source_url());
+						return true;
+					}
+
+					return false;
 				});
 
 				this.track_collection.remove(unused_tracks);
