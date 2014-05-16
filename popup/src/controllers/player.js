@@ -51,6 +51,26 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				});
 			};
 
+			$scope.set_volume = function(level) {
+				chrome.query(chrome.type_track_player, 'volume', level, function() {
+					refresh();
+				});
+			};
+
+			$scope.mute = function() {
+				$scope.volume.muted = true;
+				chrome.query(chrome.type_track_player, 'mute', function() {
+					refresh();
+				});
+			};
+
+			$scope.unmute = function() {
+				$scope.volume.muted = false;
+				chrome.query(chrome.type_track_player, 'unmute', function() {
+					refresh();
+				});
+			};
+
 			var status_interval;
 
 			var refresh = function() {
@@ -90,6 +110,22 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 								$scope.seek(ui.value);
 							}
 						}
+					});
+
+					var volume_slider = $(element).find('.volume_slider').slider({
+						orientation: 'vertical',
+						range: 'min',
+						min: 0,
+						max: 100,
+						value: $scope.volume.level,
+						change: function(event, ui) {
+							$scope.set_volume(ui.value);
+						}
+					});
+
+					var volume_slider_container = $(element).find('.volume_slider_container').hide();
+					$(element).find('.volume_control > img').click(function() {
+						volume_slider_container.toggle();
 					});
 
 					$scope.$watch('track_status.duration', function() {

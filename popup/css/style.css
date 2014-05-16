@@ -62,3 +62,11 @@ body {
 	position: relative;
 	top: 5px;
 }
+
+#player .controls img:hover {
+	cursor: pointer;
+}
+
+#player .volume_slider_container {
+	position: absolute;
+}

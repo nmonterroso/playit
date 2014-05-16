@@ -6,6 +6,11 @@
       <div class="volume_control left">
         <img src="/popup/images/player/volume.png" ng-show="!volume.muted" />
         <img src="/popup/images/player/mute.png" ng-show="volume.muted" />
+        <div class="volume_slider_container">
+          <div class="volume_slider"></div>
+          <img src="/popup/images/player/volume.png" ng-show="volume.muted" ng-click="unmute()" />
+          <img src="/popup/images/player/mute.png" ng-show="!volume.muted" ng-click="mute()" />
+        </div>
       </div>
       <div class="player_controls">
         <img src="/popup/images/player/prev.png" ng-click="play_prev()" />

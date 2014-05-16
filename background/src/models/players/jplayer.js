@@ -70,6 +70,7 @@ define(
 					return;
 				}
 
+				level /= 100;
 				this.player.jPlayer('volume', level);
 			},
 			mute: function() {
