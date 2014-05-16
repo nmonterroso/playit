@@ -5,13 +5,13 @@
   <script src="/popup/src/require.config.js"></script>
 
   <link rel="stylesheet" href="/popup/css/angular-csp.css" />
+  <link rel="stylesheet" href="/popup/css/style.css" />
 </head>
 <body>
 
-<div ng-controller="player_controller">
-</div>
-<div ng-controller="current_playlist_controller">
-
+<div id="player" ng-controller="player_controller" player-control></div>
+<div class="clear"></div>
+<div id="current_playlist" ng-controller="current_playlist_controller">
 </div>
 
 </body>

@@ -20,7 +20,7 @@ define(
 				return this.get('current_track');
 			},
 			track: function() {
-				this.tracks.get(this.list()[this.current()]);
+				return this.tracks.get(this.list()[this.current()]);
 			},
 			add: function(url, next) {
 				var track = this.tracks.create_track(url);
@@ -72,7 +72,7 @@ define(
 			details: function() {
 				return {
 					current_track: this.current(),
-					track_list: JSON.stringify(this.tracks.models)
+					track_list: this.tracks.models
 				}
 			}
 		}, {

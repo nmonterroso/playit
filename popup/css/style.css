@@ -1,0 +1,23 @@
+body {
+	width: 650px;
+	font-family: Helvetica,"Times New Roman",Serif;
+}
+
+.left {
+	float: left;
+}
+
+.clear {
+	clear: both;
+}
+
+#player .track_image {
+	display: table-cell;
+	vertical-align: middle;
+	max-width: 150px;
+	max-height: 100px;
+}
+
+#player > div:first-child {
+	margin-right: 10px;
+}

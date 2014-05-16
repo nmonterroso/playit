@@ -7,9 +7,9 @@ define(['angular', 'underscore', 'jquery'], function(ng, _, $) {
 			[
 				'$scope', '$rootScope', 'chrome_service',
 				function($scope, $rootScope, chrome) {
-					chrome.query(chrome.type_playlist, 'details', function(playlist) {
-
-					});
+//					chrome.query(chrome.type_playlist, 'details', function(playlist) {
+//
+//					});
 				}
 			]
 		);
