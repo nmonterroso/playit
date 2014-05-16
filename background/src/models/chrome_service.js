@@ -3,31 +3,31 @@ define(['backbone'], function(Backbone) {
 
 	return new (Backbone.Model.extend({
 		initialize: function() {
-			this.player = null;
+			this.playit = null;
 			this.port = null;
 		},
-		set_player: function(player) {
-			this.player = player;
+		set_playit: function(playit) {
+			this.playit = playit;
 		},
 		set_port: function(port) {
 			this.port = port;
-			var player = this.player;
+			var playit = this.playit;
 
 			port.onMessage.addListener(function(message) {
 				var actor;
 
 				switch (message.type) {
 					case 'playlist':
-						actor = player.playlist();
+						actor = playit.playlist();
 						break;
 					case 'track':
-						actor = player.playlist().track();
+						actor = playit.playlist().track();
 						break;
 					case 'track_player':
-						actor = player.playlist().track().player();
+						actor = playit.playlist().track().player();
 						break;
 					default:
-						actor = player;
+						actor = playit;
 						break;
 				}
 

@@ -13,7 +13,7 @@ require.config({
 		'jquery.jplayer': 'vendor/jquery.jplayer.min',
 
 		// core
-		'player': 'models/player',
+		'playit': 'models/playit',
 		'playlist': 'models/playlist',
 		'chrome_service': 'models/chrome_service',
 

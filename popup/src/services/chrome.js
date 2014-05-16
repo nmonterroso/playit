@@ -19,7 +19,7 @@ define(['angular'], function(ng) {
 					s4() + '-' + s4() + s4() + s4();
 			};
 
-			this.type_player = 'player';
+			this.type_playit = 'playit';
 			this.type_playlist = 'playlist';
 			this.type_track = 'track';
 			this.type_track_player = 'track_player';

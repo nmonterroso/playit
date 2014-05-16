@@ -17,7 +17,6 @@ define(
 				});
 
 				this.bind_change(new_playlist);
-				playlist.all_playlists.push(new_playlist);
 				return new_playlist;
 			}
 		}))();

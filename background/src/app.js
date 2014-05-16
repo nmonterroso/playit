@@ -1,8 +1,7 @@
-define(['player', 'chrome_service'], function(player, chrome_service) {
+define(['playit', 'chrome_service'], function(playit, chrome_service) {
 	'use strict';
 
-	var playit = new player();
-	chrome_service.set_player(playit);
+	chrome_service.set_playit(playit);
 
 	chrome.contextMenus.onClicked.addListener(function(item) {
 		var clear = item.menuItemId == 'now';

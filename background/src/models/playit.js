@@ -8,12 +8,13 @@ define(
 	function(Backbone, localstorage, playlist_collection, abstract_player) {
 		'use strict';
 
-		return Backbone.Model.extend({
+		return new (Backbone.Model.extend({
 			defaults: {
 				current_playlist: 0,
+				volume: 80,
 				id: 'main'
 			},
-			localStorage: new localstorage('player'),
+			localStorage: new localstorage('playit'),
 			playlists: playlist_collection,
 			initialize: function() {
 				this.fetch();
@@ -28,6 +29,10 @@ define(
 				}, this);
 
 				abstract_player.dispatcher.on(abstract_player.event_types.playback_complete, this.play_next, this);
+			},
+			set_volume: function(level) {
+				this.set('volume', level);
+				this.playlist().track().player().volume(level);
 			},
 			playlist: function() {
 				return this.playlists.at(this.get('current_playlist'));
@@ -51,6 +56,6 @@ define(
 			play_prev: function() {
 				this.playlist().play_prev();
 			}
-		});
+		}))();
 	}
 );
