@@ -45,11 +45,11 @@ define(
 			},
 			remove: function(id) {
 				this.set('list', _.without(this.list(), id));
-				playlist.remove_orphans();
+				playlist.remove_orphans(this.collection);
 			},
 			clear: function() {
 				this.set({list: []});
-				playlist.remove_orphans();
+				playlist.remove_orphans(this.collection);
 			},
 			play: function() {
 				var track = this.tracks.get(this.list()[this.current()]);
@@ -86,18 +86,17 @@ define(
 				}
 			}
 		}, {
-			all_playlists: [],
-			collection: track_collection,
-			remove_orphans: function() {
-				var in_use_ids = _.union(_.flatten(_.map(this.all_playlists, function(playlist) {
+			track_collection: track_collection,
+			remove_orphans: function(collection) {
+				var in_use_ids = _.union(_.flatten(_.map(collection.models, function(playlist) {
 					return playlist.list();
 				})));
 
-				var unused_tracks = this.collection.filter(function(track) {
+				var unused_tracks = this.track_collection.filter(function(track) {
 					return _.indexOf(in_use_ids, track.id) == -1;
 				});
 
-				this.collection.remove(unused_tracks);
+				this.track_collection.remove(unused_tracks);
 			}
 		});
 

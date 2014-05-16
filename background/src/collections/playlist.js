@@ -24,8 +24,6 @@ define(
 
 		collection.fetch();
 		collection.bind_change();
-		playlist.all_playlists.push.apply(playlist.all_playlists, collection.models);
-		playlist.remove_orphans();
 		return collection;
 	}
 );
