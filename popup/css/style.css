@@ -15,9 +15,12 @@ body {
 	clear: both;
 }
 
-#player .track_image > img {
-	max-width: 150px;
-	max-height: 100px;
+#player .track_image {
+	width: 150px;
+	height: 85px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 }
 
 #player div:first-child > div:first-child {

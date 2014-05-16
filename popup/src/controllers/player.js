@@ -32,12 +32,14 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 			};
 
 			$scope.play = function() {
+				$scope.track_status.state = 'play';
 				chrome.query(chrome.type_playlist, 'play', function() {
 					refresh();
 				});
 			};
 
 			$scope.pause = function() {
+				$scope.track_status.state = 'pause';
 				chrome.query(chrome.type_track_player, 'pause', function() {
 					refresh();
 				});
