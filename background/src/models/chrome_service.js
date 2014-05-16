@@ -23,6 +23,9 @@ define(['backbone'], function(Backbone) {
 					case 'track':
 						actor = player.playlist().track();
 						break;
+					case 'track_player':
+						actor = player.playlist().track().player();
+						break;
 					default:
 						actor = player;
 						break;

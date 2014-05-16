@@ -22,6 +22,7 @@ define(['angular'], function(ng) {
 			this.type_player = 'player';
 			this.type_playlist = 'playlist';
 			this.type_track = 'track';
+			this.type_track_player = 'track_player';
 
 			this.query = function() {
 				var guid = this.generate_guid();

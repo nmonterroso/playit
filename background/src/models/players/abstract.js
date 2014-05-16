@@ -2,6 +2,24 @@ define(['backbone'], function(Backbone) {
 	'use strict';
 
 	return Backbone.Model.extend({}, {
+		player: null,
+		current_player_state: 'stop',
+		default_state: {
+			state: 'stop',
+			duration: {
+				current: 0,
+				total: 0
+			},
+			volume: {
+				level: 80,
+				muted: false
+			}
+		},
+		player_state: {
+			play: 'play',
+			pause: 'pause',
+			stop: 'stop'
+		},
 		unimplemented: function(method) {
 			console.error('unimplemented method', method);
 			throw '';
@@ -28,6 +46,9 @@ define(['backbone'], function(Backbone) {
 			this.unimplemented('mute');
 		},
 		unmute: function() {
+			this.unimplemented('unmute');
+		},
+		track_state: function() {
 			this.unimplemented('unmute');
 		}
 	});

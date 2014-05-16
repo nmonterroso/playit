@@ -34,21 +34,24 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 				this.prepare();
 			}
 		},
+		player: function() {
+			var player;
+
+			switch (this.play_type()) {
+				case abstract_track.play_type_jplayer:
+					player = jplayer;
+					break;
+				case abstract_track.play_type_youtube:
+					console.log('playing in youtube', self.source_url());
+					return;
+					break;
+			}
+
+			return player;
+		},
 		play: function() {
 			this.ready(function(self) {
-				var player;
-
-				switch (self.play_type()) {
-					case abstract_track.play_type_jplayer:
-						player = jplayer;
-						break;
-					case abstract_track.play_type_youtube:
-						console.log('playing in youtube', self.source_url());
-						return;
-						break;
-				}
-
-				player.play(self.play_url());
+				self.player().play(self.play_url());
 			});
 		},
 		play_type: function() {

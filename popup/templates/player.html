@@ -2,22 +2,28 @@
   <div class="track_image">
     <img src="{{track.image}}" />
   </div>
-  <div class="controls">
+  <div>
     <div>{{track.title}}</div>
-    <div class="left">
-      Prev
-    </div>
-    <div class="left">
-      Pause/Play
-    </div>
-    <div class="left">
-      Next
-    </div>
-    <div class="left">
-      Volume Thingie
-    </div>
+    <div class="controls">
+      <div class="volume_control left">
+        <img src="/popup/images/player/volume.png" ng-show="!volume.muted" />
+        <img src="/popup/images/player/mute.png" ng-show="volume.muted" />
+      </div>
+      <div class="player_controls">
+        <img src="/popup/images/player/prev.png" ng-click="play_prev()" />
+        <img src="/popup/images/player/play.png" ng-click="play()" ng-show="track_status.state == 'stop' || track_status.state == 'pause'" />
+        <img src="/popup/images/player/pause.png" ng-click="pause()" ng-show="track_status.state == 'play'"/>
+        <img src="/popup/images/player/next.png" ng-click="play_next()" />
+      </div>
+     </div>
   </div>
 </div>
-<div>
-  <hr />
+<div class="seekbar_container">
+  <div class="left time" style="margin-right: 5px">
+    {{transform_time(track_status.duration.current)}}
+  </div>
+  <div class="seekbar left"></div>
+  <div class="left time" style="margin-left: 5px; text-align: right;">
+    {{transform_time(track_status.duration.total)}}
+  </div>
 </div>

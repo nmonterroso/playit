@@ -7,6 +7,10 @@ body {
 	float: left;
 }
 
+.time {
+	width: 55px;
+}
+
 .clear {
 	clear: both;
 }
@@ -25,6 +29,33 @@ body {
 	vertical-align: middle;
 }
 
-#player .controls > div {
+#player .controls {
+	margin-top: 10px;
+}
+
+#player .volume_control {
+	position: relative;
+	top: 20px;
+}
+
+#player .volume_control img {
+	width: 16px;
+}
+
+#player .player_controls {
+	text-align: center;
+}
+
+#player .player_controls img {
 	margin-right: 10px;
+}
+
+#player .seekbar_container {
+	margin-top: 5px;
+}
+
+#player .seekbar {
+	width: 475px;
+	position: relative;
+	top: 5px;
 }

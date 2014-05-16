@@ -60,10 +60,20 @@ define(
 				this.play();
 			},
 			play_next: function() {
+				var next = this.current() + 1;
+				if (next >= this.tracks.size()) {
+					return;
+				}
+
 				this.set({current_track: this.current() + 1});
 				this.play();
 			},
 			play_prev: function() {
+				var prev = this.current() - 1;
+				if (prev < 0) {
+					return;
+				}
+
 				this.set({current_track: this.current() - 1});
 				this.play();
 			},
