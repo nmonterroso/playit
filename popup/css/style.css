@@ -1,5 +1,5 @@
 body {
-	width: 650px;
+	width: 600px;
 	font-family: Helvetica,"Times New Roman",Serif;
 }
 
@@ -11,13 +11,20 @@ body {
 	clear: both;
 }
 
-#player .track_image {
-	display: table-cell;
-	vertical-align: middle;
+#player .track_image > img {
 	max-width: 150px;
 	max-height: 100px;
 }
 
-#player > div:first-child {
+#player div:first-child > div:first-child {
+	margin-right: 10px;
+}
+
+#player div:first-child > div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#player .controls > div {
 	margin-right: 10px;
 }
