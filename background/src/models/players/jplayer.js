@@ -21,7 +21,7 @@ define(
 				var self = this;
 
 				var cb = function() {
-					if (self.player.data('jPlayer').status.src != url) {
+					if (self.player.data('jPlayer').status.src != url || self.current_player_state == self.player_state.stop) {
 						self.player.jPlayer('setMedia', { mp3: url });
 					}
 
@@ -67,6 +67,8 @@ define(
 
 				this.current_player_state = this.player_state.stop;
 				this.player.jPlayer('stop');
+				this.player.jPlayer('destroy');
+				this.player = null;
 			},
 			seek: function(time) {
 				if (this.player == null) {

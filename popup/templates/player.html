@@ -1,6 +1,6 @@
 <div>
   <div class="track_image" style="background-image: url({{track.image}});"></div>
-  <div>
+  <div style="width: 435px;">
     <div>{{track.title}}</div>
     <div class="controls">
       <div class="volume_control left">
@@ -14,6 +14,7 @@
       </div>
       <div class="player_controls">
         <img src="/popup/images/player/prev.png" ng-click="play_prev()" />
+        <img src="/popup/images/player/stop.png" ng-click="stop()" />
         <img src="/popup/images/player/play.png" ng-click="play()" ng-show="track_status.state == 'stop' || track_status.state == 'pause'" />
         <img src="/popup/images/player/pause.png" ng-click="pause()" ng-show="track_status.state == 'play'"/>
         <img src="/popup/images/player/next.png" ng-click="play_next()" />

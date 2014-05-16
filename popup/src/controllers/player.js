@@ -45,6 +45,13 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				});
 			};
 
+			$scope.stop = function() {
+				$scope.track_status.state = 'stop';
+				chrome.query(chrome.type_track_player, 'stop', function() {
+					refresh();
+				});
+			};
+
 			$scope.play_next = function() {
 				chrome.query(chrome.type_playlist, 'play_next', function() {
 					refresh();
