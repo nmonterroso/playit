@@ -1,6 +1,11 @@
 body {
 	width: 450px;
 	font-family: Helvetica,"Times New Roman",Serif;
+	margin: 0 8px;
+}
+
+.track {
+	padding: 5px 0;
 }
 
 .left {
@@ -24,10 +29,6 @@ body {
 	background-size: cover;
 	background-position: center;
 	margin-right: 10px;
-}
-
-#current_playlist > div {
-	padding: 5px 0;
 }
 
 .track_data {

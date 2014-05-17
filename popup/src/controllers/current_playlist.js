@@ -179,9 +179,11 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 						});
 
 						var scroll_to_current = function() {
-							$.scrollTo('#track-'+$scope.playlist.current_track, {
-								duration: 200
-							});
+							setTimeout(function() { // initial load causes an abrupt jump
+								$.scrollTo('#track-'+$scope.playlist.current_track, {
+									duration: 200
+								});
+							}, 200);
 						};
 
 						$scope.$watch('track_status.duration', function() {
