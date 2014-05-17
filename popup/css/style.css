@@ -1,5 +1,5 @@
 body {
-	width: 600px;
+	width: 450px;
 	font-family: Helvetica,"Times New Roman",Serif;
 }
 
@@ -32,7 +32,7 @@ body {
 
 .track_data {
 	position: relative;
-	width: 445px;
+	width: 300px;
 	height: 65px;
 }
 
@@ -47,7 +47,7 @@ body {
 }
 
 .volume_slider {
-	width: 100px;
+	width: 50px;
 }
 
 .ui-slider {
@@ -68,7 +68,7 @@ body {
 }
 
 .seekbar {
-	width: 250px;
+	width: 150px;
 }
 
 .track_image {
