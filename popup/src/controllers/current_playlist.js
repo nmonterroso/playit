@@ -1,4 +1,4 @@
-define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
+define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], function(ng, _, $) {
 	'use strict';
 
 	ng.module('playit.controllers')
@@ -58,7 +58,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				$scope.playlist = {
 					current_track: null,
 					track_list: [{
-						id: '-1',
+						id: null,
 						image: '/popup/images/track_empty.jpg',
 						title: 'Loading...'
 					}]
@@ -178,6 +178,12 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 							}
 						});
 
+						var scroll_to_current = function() {
+							$.scrollTo('#track-'+$scope.playlist.current_track, {
+								duration: 200
+							});
+						};
+
 						$scope.$watch('track_status.duration', function() {
 							seekbar.slider('option', 'max', $scope.track_status.duration.total);
 							seekbar.slider('option', 'value', $scope.track_status.duration.current);
@@ -186,6 +192,8 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 						$scope.$watch('volume', function() {
 							volume_slider.slider('option', 'value', $scope.volume.level);
 						});
+
+						$scope.$watch('playlist.current_track', scroll_to_current);
 					});
 				}
 			}
