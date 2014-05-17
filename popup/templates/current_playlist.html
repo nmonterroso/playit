@@ -1,5 +1,7 @@
 <div ng-repeat="track in playlist.track_list" ng-class-even="'even'" ng-class-odd="'odd'">
-  <div class="left track_image" style="background-image: url({{track.image}});"></div>
+  <div class="left track_image" style="background-image: url({{track.image}});">
+    <img class="track_image_link" src="{{track.image}}" ng-click="play_track(track.id)"/>
+  </div>
   <div class="left track_data" style="position: relative">
     <div class="track_title" ng-click="play_track(track.id)">
       {{track.title}}

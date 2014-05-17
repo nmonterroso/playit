@@ -74,4 +74,13 @@ body {
 .track_image {
 	width: 115px;
 	height: 65px;
+	overflow: hidden;
+}
+
+.track_image_link {
+	opacity: 0.01;
+}
+
+.track_image_link:hover {
+	cursor: pointer;
 }
