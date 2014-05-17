@@ -59,6 +59,8 @@ body {
 .track_title {
 	cursor: pointer;
 	font-size: 11pt;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .controls img {

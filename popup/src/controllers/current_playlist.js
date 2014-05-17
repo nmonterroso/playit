@@ -187,8 +187,6 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 				templateUrl: '/popup/templates/current_playlist.html',
 				link: function($scope, element, attrs) {
 					$scope.$watch('ready', function() {
-						var seekbar_active = false;
-
 						var seekbar = $(element).find('.seekbar').slider({
 							range: 'min',
 							min: 0,
@@ -198,10 +196,10 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 								}
 							},
 							start: function() {
-								seekbar_active = true;
+								seekbar.data('seekbar_active', true);
 							},
 							stop: function() {
-								seekbar_active = false;
+								seekbar.data('seekbar_active', false);
 							}
 						});
 
@@ -218,7 +216,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 						});
 
 						$scope.$watch('track_status.duration', function() {
-							if (!seekbar_active) {
+							if (!seekbar.data('seekbar_active')) {
 								seekbar.slider('option', 'max', $scope.track_status.duration.total);
 								seekbar.slider('option', 'value', $scope.track_status.duration.current);
 							}
