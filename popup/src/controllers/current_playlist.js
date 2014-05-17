@@ -7,6 +7,12 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 			function($scope, $rootScope, $interval, chrome) {
 				var status_interval;
 
+				var track_state = {
+					play: 'play',
+					pause: 'pause',
+					stop: 'stop'
+				};
+
 				var refresh_list = function() {
 					chrome.query(chrome.type_playlist, 'details', function(playlist) {
 						$scope.$apply(function() {
@@ -25,7 +31,15 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 					}
 
 					status_interval = $interval(function() {
+						if ($scope.playlist.current_track == null) {
+							return;
+						}
+
 						chrome.query(chrome.type_track_player, 'track_state', function(status) {
+							if (status == null) {
+								return;
+							}
+
 							$scope.$apply(function() {
 								$scope.track_status.state = status.state;
 								$scope.track_status.duration = status.duration;
@@ -42,7 +56,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				$scope.ready = false;
 
 				$scope.playlist = {
-					current_track: '-1',
+					current_track: null,
 					track_list: [{
 						id: '-1',
 						image: '/popup/images/track_empty.jpg',
@@ -68,7 +82,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				};
 
 				$scope.play = function() {
-					$scope.track_status.state = 'play';
+					$scope.track_status.state = track_state.play;
 					chrome.query(chrome.type_playlist, 'play');
 				};
 
@@ -82,13 +96,13 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				};
 
 				$scope.pause = function() {
-					$scope.track_status.state = 'pause';
+					$scope.track_status.state =  track_state.pause;
 					chrome.query(chrome.type_track_player, 'pause');
 				};
 
-				$scope.stop = function() {
-					$scope.track_status.state = 'stop';
-					chrome.query(chrome.type_track_player, 'stop');
+				$scope.stop = function(cb) {
+					$scope.track_status.state =  track_state.stop;
+					chrome.query(chrome.type_track_player, 'stop', cb);
 				};
 
 				$scope.set_volume = function(level) {
@@ -103,6 +117,34 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				$scope.unmute = function() {
 					$scope.volume.muted = false;
 					chrome.query(chrome.type_track_player, 'unmute');
+				};
+
+				$scope.remove = function(track_id) {
+					var remove = function() {
+						chrome.query(chrome.type_playlist, 'remove', track_id);
+					};
+
+					if ($scope.track_status.state == track_state.play && track_id == $scope.playlist.current_track) {
+						chrome.query(chrome.type_playlist, 'play_next', function(next_track_id) {
+							if (next_track_id == null) {
+								$scope.stop(function() {
+									remove();
+								});
+							} else {
+								remove();
+							}
+
+							$scope.$apply(function() {
+								$scope.playlist.current_track = next_track_id;
+							});
+						});
+					} else {
+						remove();
+					}
+
+					$scope.playlist.track_list = _.without($scope.playlist.track_list, _.find($scope.playlist.track_list, function(track) {
+						return track.id == track_id;
+					}));
 				};
 
 				refresh_list();

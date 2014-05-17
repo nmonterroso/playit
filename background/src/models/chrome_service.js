@@ -24,14 +24,20 @@ define(['backbone'], function(Backbone) {
 						actor = playit.playlist().track();
 						break;
 					case 'track_player':
-						actor = playit.playlist().track().player();
+						var track = playit.playlist().track();
+						actor = track == null ? null : track.player();
 						break;
 					default:
 						actor = playit;
 						break;
 				}
 
-				var response = actor[message.func].apply(actor, message.args);
+				if (actor == null) {
+					console.log("NULL ACTOR FROM "+message.type);
+				}
+
+				var response = actor == null ? null : actor[message.func].apply(actor, message.args);
+
 				port.postMessage({
 					id: message.id || 0,
 					type: message.type+'-'+message.func,

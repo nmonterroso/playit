@@ -107,28 +107,35 @@ define(
 				}
 
 				track.play();
+				return this.current();
 			},
 			play_at: function(index) {
 				this.set_current(index);
 				this.play();
+
+				return this.current();
 			},
 			play_next: function() {
 				var next_index = this.next_index();
 				if (next_index === null) {
-					return;
+					return null;
 				}
 
 				this.set_current(next_index);
 				this.play();
+
+				return this.current();
 			},
 			play_prev: function() {
 				var prev_index = this.prev_index();
 				if (prev_index === null) {
-					return;
+					return null;
 				}
 
 				this.set_current(prev_index);
 				this.play();
+
+				return this.current();
 			},
 
 			// requests coming from chrome
