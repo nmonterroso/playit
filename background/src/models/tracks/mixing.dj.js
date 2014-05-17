@@ -32,6 +32,10 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 				.then(function(page) {
 					var mp3_href = zippy.parse_page(page);
 
+					if (mp3_href == null) {
+						throw "unable to determine mixing.dj/zippy play url";
+					}
+
 					self.set({
 						play_url: zippy_root+mp3_href,
 						ready: true,
