@@ -65,8 +65,8 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 				$scope.track_status = {
 					state: 'stop',
 					duration: {
-						current: '0:00:00',
-						total: '0:00:00'
+						current: 0,
+						total: 0
 					}
 				};
 
@@ -154,6 +154,30 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 					}));
 				};
 
+				$scope.transform_time = function(time) {
+					// get hours
+					var hours = Math.floor(time / (60*60));
+					var minutes = Math.floor((time % (60*60))/60);
+					var seconds = Math.floor(time % 60);
+					var time_display = [];
+
+					if (hours > 0) {
+						time_display.push(hours);
+					}
+
+					if (minutes < 10) {
+						minutes = '0'+minutes;
+					}
+
+					if (seconds < 10) {
+						seconds = '0'+seconds;
+					}
+
+					time_display.push(minutes, seconds);
+
+					return time_display.join(':');
+				};
+
 				refresh_list();
 			}
 		])
@@ -163,6 +187,8 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 				templateUrl: '/popup/templates/current_playlist.html',
 				link: function($scope, element, attrs) {
 					$scope.$watch('ready', function() {
+						var seekbar_active = false;
+
 						var seekbar = $(element).find('.seekbar').slider({
 							range: 'min',
 							min: 0,
@@ -170,6 +196,12 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 								if (event.originalEvent) {
 									$scope.seek(ui.value);
 								}
+							},
+							start: function() {
+								seekbar_active = true;
+							},
+							stop: function() {
+								seekbar_active = false;
 							}
 						});
 
@@ -186,8 +218,10 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 						});
 
 						$scope.$watch('track_status.duration', function() {
-							seekbar.slider('option', 'max', $scope.track_status.duration.total);
-							seekbar.slider('option', 'value', $scope.track_status.duration.current);
+							if (!seekbar_active) {
+								seekbar.slider('option', 'max', $scope.track_status.duration.total);
+								seekbar.slider('option', 'value', $scope.track_status.duration.current);
+							}
 						});
 
 						$scope.$watch('volume', function() {

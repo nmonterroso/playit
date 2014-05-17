@@ -1,7 +1,5 @@
-define(['backbone', 'underscore', 'jquery', 'jquery.jplayer'], function(Backbone, _, $) {
+define(['backbone', 'underscore'], function(Backbone, _) {
 	'use strict';
-
-	$.jPlayer.timeFormat.showHour = true;
 
 	return Backbone.Model.extend({}, {
 		player: null,
@@ -14,8 +12,8 @@ define(['backbone', 'underscore', 'jquery', 'jquery.jplayer'], function(Backbone
 		default_state: {
 			state: 'stop',
 			duration: {
-				current: '0:00:00',
-				total: '0:00:00'
+				current: 0,
+				total: 0
 			},
 			volume: {
 				level: 80,
@@ -26,9 +24,6 @@ define(['backbone', 'underscore', 'jquery', 'jquery.jplayer'], function(Backbone
 			play: 'play',
 			pause: 'pause',
 			stop: 'stop'
-		},
-		format_time: function(time) {
-			return $.jPlayer.convertTime(time);
 		},
 		unimplemented: function(method) {
 			console.error('unimplemented method', method);
