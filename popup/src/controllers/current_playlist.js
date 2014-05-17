@@ -1,4 +1,4 @@
-define(['angular', 'underscore', 'jquery'], function(ng, _, $) {
+define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 	'use strict';
 
 	ng.module('playit.controllers')
@@ -14,11 +14,12 @@ define(['angular', 'underscore', 'jquery'], function(ng, _, $) {
 							$scope.ready = true;
 						});
 
-						refresh_track();
+						refresh_track(true);
 					});
 				};
 
-				var refresh_track = function() {
+				var refresh_track = function(apply_volume) {
+					apply_volume = apply_volume || false;
 					if (status_interval) {
 						$interval.cancel(status_interval);
 					}
@@ -28,7 +29,11 @@ define(['angular', 'underscore', 'jquery'], function(ng, _, $) {
 							$scope.$apply(function() {
 								$scope.track_status.state = status.state;
 								$scope.track_status.duration = status.duration;
-								$scope.volume = status.volume;
+
+								if (apply_volume) {
+									$scope.volume = status.volume;
+									apply_volume = false;
+								}
 							});
 						});
 					}, 300);
