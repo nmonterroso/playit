@@ -10,7 +10,7 @@ define(
 
 		var playlist = Backbone.Model.extend({
 			defaults: {
-				current_track: 0,
+				current_track: null,
 				list: []
 			},
 			tracks: track_collection,
@@ -26,8 +26,40 @@ define(
 			current: function() {
 				return this.get('current_track');
 			},
+			current_index: function() {
+				return _.indexOf(this.list(), this.current());
+			},
+			next_index: function() {
+				var current = this.current_index();
+				if (current >= this.list().length - 1) {
+					return null;
+				}
+
+				return current + 1;
+			},
+			prev_index: function() {
+				var current = this.current_index();
+				if (current <= 0) {
+					return null;
+				}
+
+				return current - 1;
+			},
+			set_current: function(track) {
+				if (_.isObject(track)) { // by track
+					this.set({ current_track: track.id })
+				} else if (_.isNumber(track)) { // by index
+					this.set({ current_track: this.list()[track] });
+				} else { // by id
+					this.set({ current_track: track });
+				}
+			},
 			track: function() {
-				return this.tracks.get(this.list()[this.current()]);
+				if (this.current() == null) {
+					return null;
+				}
+
+				return this.tracks.get(this.current());
 			},
 			add: function(url, next) {
 				var track = this.tracks.create_track(url);
@@ -47,17 +79,18 @@ define(
 				this.set('list', list);
 
 				if (this.list().length == 1) {
+					this.set_current(track);
 					this.play();
 				}
 			},
 			remove: function(id) {
-				var position = _.indexOf(this.list(), id);
-				if (position == -1) {
-					return;
-				}
+				if (id == this.current()) {
+					var new_current = this.next_index();
+					if (!new_current) {
+						new_current = this.prev_index();
+					}
 
-				if (position == this.current() && position > 0 && position == this.list().length - 1) {
-					this.set({current_track: this.current() - 1});
+					this.set_current(new_current);
 				}
 
 				this.set('list', _.without(this.list(), id));
@@ -68,41 +101,40 @@ define(
 				playlist.remove_orphans(this.collection);
 			},
 			play: function() {
-				var track = this.tracks.get(this.list()[this.current()]);
+				var track = this.track();
+				if (track == null) {
+					return;
+				}
+
 				track.play();
 			},
 			play_at: function(index) {
-				if (!_.isNumber(index)) {
-					index = _.indexOf(this.list(), index);
-				}
-
-				this.set({current_track: index});
+				this.set_current(index);
 				this.play();
 			},
 			play_next: function() {
-				var next = this.current() + 1;
-				if (next >= this.list().length) {
+				var next_index = this.next_index();
+				if (next_index === null) {
 					return;
 				}
 
-				this.set({current_track: this.current() + 1});
+				this.set_current(next_index);
 				this.play();
 			},
 			play_prev: function() {
-				var prev = this.current() - 1;
-				if (prev < 0) {
+				var prev_index = this.prev_index();
+				if (prev_index === null) {
 					return;
 				}
 
-				this.set({current_track: prev});
+				this.set_current(prev_index);
 				this.play();
 			},
 
 			// requests coming from chrome
 			details: function() {
-				var current = this.track();
 				return {
-					current_track: current.id,
+					current_track: this.current(),
 					track_list: this.tracks.models
 				}
 			}
