@@ -32,10 +32,6 @@ define(['backbone'], function(Backbone) {
 						break;
 				}
 
-				if (actor == null) {
-					console.log("NULL ACTOR FROM "+message.type);
-				}
-
 				var response = actor == null ? null : actor[message.func].apply(actor, message.args);
 
 				port.postMessage({

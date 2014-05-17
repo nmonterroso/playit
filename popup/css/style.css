@@ -56,15 +56,13 @@ body {
 	top: 3.5px;
 }
 
-.track_title:hover {
+.track_title {
 	cursor: pointer;
+	font-size: 11pt;
 }
 
 .controls img {
-	width: 16px;
-}
-
-.controls img:hover {
+	width: 12px;
 	cursor: pointer;
 }
 
@@ -80,8 +78,10 @@ body {
 
 .track_image_link {
 	opacity: 0.01;
+	cursor: pointer;
 }
 
-.track_image_link:hover {
-	cursor: pointer;
+.volume_control img {
+	position: relative;
+	top: 2px;
 }

@@ -144,6 +144,18 @@ define(
 					current_track: this.current(),
 					track_list: this.tracks.models
 				}
+			},
+			get_next_id: function() {
+				var next_index = this.next_index();
+				if (!next_index) {
+					next_index = this.prev_index();
+				}
+
+				if (next_index == null) {
+					return null;
+				}
+
+				return this.tracks.get(this.list()[next_index]).id;
 			}
 		}, {
 			track_collection: track_collection,

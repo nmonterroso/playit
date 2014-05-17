@@ -124,20 +124,29 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 						chrome.query(chrome.type_playlist, 'remove', track_id);
 					};
 
-					if ($scope.track_status.state == track_state.play && track_id == $scope.playlist.current_track) {
-						chrome.query(chrome.type_playlist, 'play_next', function(next_track_id) {
-							if (next_track_id == null) {
-								$scope.stop(function() {
+					if (track_id == $scope.playlist.current_track) {
+						if ($scope.track_status.state == track_state.play) {
+							chrome.query(chrome.type_playlist, 'play_next', function(next_track_id) {
+								if (next_track_id == null) {
+									$scope.stop(function() {
+										remove();
+									});
+								} else {
 									remove();
-								});
-							} else {
-								remove();
-							}
+								}
 
-							$scope.$apply(function() {
-								$scope.playlist.current_track = next_track_id;
+								$scope.$apply(function() {
+									$scope.playlist.current_track = next_track_id;
+								});
 							});
-						});
+						} else {
+							chrome.query(chrome.type_playlist, 'get_next_id', function(next_track_id) {
+								remove();
+								$scope.$apply(function() {
+									$scope.playlist.current_track = next_track_id;
+								});
+							});
+						}
 					} else {
 						remove();
 					}
