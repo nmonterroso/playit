@@ -73,7 +73,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui'], function(ng, _, $) {
 				};
 
 				$scope.play_track = function(track_id) {
-					if (track_id == $scope.playlist.current_track) {
+					if (track_id == $scope.playlist.current_track && $scope.track_status.state == 'play') {
 						return;
 					}
 
