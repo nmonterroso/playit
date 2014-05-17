@@ -92,7 +92,10 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 					}
 
 					$scope.playlist.current_track = track_id;
-					chrome.query(chrome.type_playlist, 'play_at', track_id);
+
+					$scope.stop(function() {
+						chrome.query(chrome.type_playlist, 'play_at', track_id);
+					});
 				};
 
 				$scope.pause = function() {
