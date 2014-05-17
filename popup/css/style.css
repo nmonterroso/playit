@@ -7,6 +7,10 @@ body {
 	float: left;
 }
 
+.right {
+	float: right;
+}
+
 .time {
 	width: 55px;
 }
@@ -15,74 +19,59 @@ body {
 	clear: both;
 }
 
-#player .track_image {
-	width: 150px;
-	height: 85px;
+.track_image {
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-}
-
-#player div:first-child > div:first-child {
 	margin-right: 10px;
 }
 
-#player div:first-child > div {
-	display: inline-block;
-	vertical-align: middle;
+#current_playlist > div {
+	padding: 5px 0;
 }
 
-#player .controls {
-	margin-top: 10px;
-}
-
-#player .volume_control {
+.track_data {
 	position: relative;
-	top: 20px;
+	width: 445px;
+	height: 65px;
 }
 
-#player .volume_control img {
-	width: 16px;
+.controls {
+	position: absolute;
+	bottom: 0;
+	left: 0;
 }
 
-#player .player_controls {
-	text-align: center;
-}
-
-#player .player_controls img {
+.player_controls {
 	margin-right: 10px;
 }
 
-#player .seekbar_container {
-	margin-top: 5px;
+.volume_slider {
+	width: 100px;
 }
 
-#player .seekbar {
-	width: 475px;
+.ui-slider {
 	position: relative;
-	top: 5px;
+	top: 3.5px;
 }
 
-#player .controls img:hover {
+.track_title:hover {
 	cursor: pointer;
 }
 
-#player .volume_slider_container {
-	z-index: 20;
-	background-color: white;
-	position: absolute;
-	top: 20px;
-	left: -5px;
-	border: 1px solid rgba(165, 164, 164, 0.72);
-	padding: 3px;
-	border-radius: 10px;
+.controls img {
+	width: 16px;
 }
 
-#player .volume_slider_container img {
-	position: relative;
-	left: 1px;
+.controls img:hover {
+	cursor: pointer;
 }
 
-#player .volume_slider {
-	margin: 0 auto 4px;
+.seekbar {
+	width: 250px;
+}
+
+.track_image {
+	width: 115px;
+	height: 65px;
 }

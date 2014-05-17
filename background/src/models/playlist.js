@@ -72,6 +72,10 @@ define(
 				track.play();
 			},
 			play_at: function(index) {
+				if (!_.isNumber(index)) {
+					index = _.indexOf(this.list(), index);
+				}
+
 				this.set({current_track: index});
 				this.play();
 			},
@@ -96,8 +100,9 @@ define(
 
 			// requests coming from chrome
 			details: function() {
+				var current = this.track();
 				return {
-					current_track: this.current(),
+					current_track: current.id,
 					track_list: this.tracks.models
 				}
 			}
