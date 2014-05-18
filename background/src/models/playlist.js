@@ -76,7 +76,7 @@ define(
 					list.push(track.id);
 				}
 
-				this.set('list', list);
+				this.set({ list: list });
 
 				if (this.list().length == 1) {
 					this.set_current(track);
@@ -93,7 +93,7 @@ define(
 					this.set_current(new_current);
 				}
 
-				this.set('list', _.without(this.list(), id));
+				this.set({ list: _.without(this.list(), id) });
 				playlist.remove_orphans(this.collection);
 			},
 			clear: function() {
@@ -137,12 +137,21 @@ define(
 
 				return this.current();
 			},
+			reorder: function(order) {
+				this.set({ list: order });
+				return this.list();
+			},
 
 			// requests coming from chrome
 			details: function() {
+				var models = [];
+				_.each(this.list(), function(track_id) {
+					models.push(this.get(track_id));
+				}, this.tracks);
+
 				return {
 					current_track: this.current(),
-					track_list: this.tracks.models
+					track_list: models
 				}
 			},
 			get_next_id: function() {

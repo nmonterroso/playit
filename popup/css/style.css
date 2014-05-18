@@ -1,11 +1,17 @@
 body {
-	width: 450px;
+	width: 465px;
 	font-family: Helvetica,"Times New Roman",Serif;
-	margin: 0 8px;
+	margin: 0;
 }
 
 .track {
-	padding: 5px 0;
+	padding: 5px 8px;
+	background: white;
+}
+
+.current_track {
+	background: #e4e4e4;
+	font-weight: bold;
 }
 
 .left {

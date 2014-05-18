@@ -154,6 +154,10 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 					}));
 				};
 
+				$scope.set_order = function(new_order) {
+					chrome.query(chrome.type_playlist, 'reorder', new_order);
+				};
+
 				$scope.transform_time = function(time) {
 					// get hours
 					var hours = Math.floor(time / (60*60));
@@ -214,6 +218,18 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 								}
 							}
 						});
+
+						if ($scope.playlist.track_list.length > 0) {
+							$(element).sortable({
+								stop: function(event, ui) {
+									var new_order = [];
+									$('.track').each(function() {
+										new_order.push($(this).attr('id').split('track-')[1]);
+									});
+									$scope.set_order(new_order);
+								}
+							});
+						}
 
 						var scroll_track_title = function(track_id) {
 							var track_title = $('#track-'+track_id).find('.track_title');
@@ -292,6 +308,9 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							setTimeout(function() {
 								scroll_track_title($scope.playlist.current_track);
 							}, 1000);
+
+							$('.track').removeClass('current_track');
+							$('#track-'+$scope.playlist.current_track).addClass('current_track');
 						});
 					});
 				}
