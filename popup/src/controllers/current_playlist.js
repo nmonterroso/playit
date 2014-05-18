@@ -297,7 +297,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 						});
 
 						$scope.$watch('playlist.current_track', function() {
-							$.scrollTo('#track-'+$scope.playlist.current_track, {
+							$('#current_playlist').scrollTo('#track-'+$scope.playlist.current_track, {
 								duration: 200
 							});
 

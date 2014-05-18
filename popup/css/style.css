@@ -4,6 +4,12 @@ body {
 	margin: 0;
 }
 
+#current_playlist {
+	height: 375px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
 .track {
 	padding: 5px 8px;
 	background: white;
@@ -39,7 +45,7 @@ body {
 
 .track_data {
 	position: relative;
-	width: 300px;
+	width: 280px;
 	height: 65px;
 }
 
