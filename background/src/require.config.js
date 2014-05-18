@@ -1,20 +1,35 @@
 require.config({
 	'paths': {
-		'backbone': 'vendor/backbone-min',
-		'jquery': 'vendor/jquery-2.1.1.min', // because backbone depends on it
-		'underscore': 'vendor/underscore-min',
+		// common
+		'underscore': '/common/underscore-min',
+		'jquery': '/common/jquery-2.1.1.min',
+
+		'backbone': 'vendor/backbone',
+		'localstorage': 'vendor/backbone.localStorage',
 		'q': 'vendor/q',
 		'swfobject': 'vendor/swfobject',
 
+		// jquery deps
+		'jquery.jplayer': 'vendor/jquery.jplayer.min',
+
 		// core
-		'player': 'playit/player',
-		'playlist': 'playit/playlist',
-		'track_factory': 'playit/track_factory',
+		'playit': 'models/playit',
+		'playlist': 'models/playlist',
+		'chrome_service': 'models/chrome_service',
+
+		// collections
+		'collections/abstract': 'collections/abstract',
+		'collections/playlist': 'collections/playlist',
+		'collections/track': 'collections/track',
 
 		// tracks
-		'tracks/abstract': 'playit/tracks/abstract',
-		'tracks/mixing.dj': 'playit/tracks/mixing.dj',
-		'tracks/zippyshare.com': 'playit/tracks/zippyshare.com'
+		'tracks/abstract': 'models/tracks/abstract',
+		'tracks/mixing.dj': 'models/tracks/mixing.dj',
+		'tracks/zippyshare.com': 'models/tracks/zippyshare.com',
+
+		// players
+		'players/abstract': 'models/players/abstract',
+		'players/jplayer': 'models/players/jplayer'
 	},
 	'shim': {
 		'swfobject': {

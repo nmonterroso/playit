@@ -1,4 +1,4 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
+define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jplayer) {
 	'use strict';
 
 	var abstract_track = Backbone.Model.extend({
@@ -6,7 +6,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 			ready: false,
 			source_url: null,
 			play_url: null,
-			unplayable: false
+			unplayable: false,
+			image: null,
+			title: null
 		},
 		initialize: function() {
 			this.dispatcher = _.clone(Backbone.Events);
@@ -32,22 +34,33 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 				this.prepare();
 			}
 		},
+		player: function() {
+			var player;
+
+			switch (this.play_type()) {
+				case abstract_track.play_type_jplayer:
+					player = jplayer;
+					break;
+				case abstract_track.play_type_youtube:
+					console.log('playing in youtube', self.source_url());
+					return;
+					break;
+			}
+
+			return player;
+		},
 		play: function() {
 			this.ready(function(self) {
-				var player;
-
-				switch (self.play_type()) {
-					case abstract_track.play_type_jplayer:
-						console.log('playing in jplayer', self.source_url());
-						break;
-					case abstract_track.play_type_youtube:
-						console.log('playing in youtube', self.source_url());
-						break;
-				}
+				self.player().play(self.play_url());
 			});
 		},
 		play_type: function() {
 			return abstract_track.play_type_jplayer;
+		},
+		unplayable: function() {
+			console.error("unable to play track from "+this.source_url());
+			this.set('unplayable', true);
+			this.collection.dispatcher.trigger(abstract_track.event_types.unplayable, this);
 		},
 
 		// abstract methods
@@ -61,11 +74,12 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 		play_type_jplayer: 'jplayer',
 		play_type_youtube: 'youtube',
 		event_types: {
-			ready: 'ready'
+			ready: 'ready',
+			unplayable: 'unplayable'
 		},
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);
-			throw "";
+			throw '';
 		},
 		can_play: function(url) {
 			return false;

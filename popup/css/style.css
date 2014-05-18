@@ -1,0 +1,86 @@
+body {
+	width: 450px;
+	font-family: Helvetica,"Times New Roman",Serif;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.time {
+	width: 55px;
+}
+
+.clear {
+	clear: both;
+}
+
+.track_image {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	margin-right: 10px;
+}
+
+#current_playlist > div {
+	padding: 5px 0;
+}
+
+.track_data {
+	position: relative;
+	width: 300px;
+	height: 65px;
+}
+
+.controls {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.player_controls {
+	margin-right: 10px;
+}
+
+.volume_slider {
+	width: 50px;
+}
+
+.ui-slider {
+	position: relative;
+	top: 3.5px;
+}
+
+.track_title:hover {
+	cursor: pointer;
+}
+
+.controls img {
+	width: 16px;
+}
+
+.controls img:hover {
+	cursor: pointer;
+}
+
+.seekbar {
+	width: 150px;
+}
+
+.track_image {
+	width: 115px;
+	height: 65px;
+	overflow: hidden;
+}
+
+.track_image_link {
+	opacity: 0.01;
+}
+
+.track_image_link:hover {
+	cursor: pointer;
+}
