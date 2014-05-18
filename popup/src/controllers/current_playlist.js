@@ -215,6 +215,43 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							}
 						});
 
+						$(element).find('.track_title').hover(
+							function() { // in
+								var title = $(this).find('.track_title_text');
+								var container_width = $(this).width();
+								var title_width = title.width();
+
+								if (title_width > container_width) {
+									var helper =
+										$(this)
+											.find('.track_title_text_scroll_helper')
+												.css({ left: container_width })
+												.text(title.text());
+									var duration = title_width*5;
+									var initial_distance = title_width-(container_width * .75);
+									var secondary_duration = (title_width-initial_distance)*(duration/initial_distance);
+									var helper_duration = container_width*((duration+secondary_duration)/title_width);
+
+									title.stop().animate({ left: -initial_distance }, duration, 'linear', function() {
+										title.animate({ left: -title_width }, secondary_duration, 'linear');
+										helper.animate({ left: 0 }, helper_duration, 'linear', function() {
+											title.css({ left: 0 });
+											$(this).trigger('mouseenter');
+										});
+									});
+								}
+							}, function() { // out
+								$(this)
+									.find('.track_title_text')
+										.stop()
+										.animate({ left: 0 }, 0)
+									.end()
+									.find('.track_title_text_scroll_helper')
+										.stop()
+										.text('');
+							}
+						);
+
 						$scope.$watch('track_status.duration', function() {
 							if (!seekbar.data('seekbar_active')) {
 								seekbar.slider('option', 'max', $scope.track_status.duration.total);

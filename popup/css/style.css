@@ -59,8 +59,14 @@ body {
 .track_title {
 	cursor: pointer;
 	font-size: 11pt;
-	white-space: nowrap;
+	height: 13pt;
 	overflow: hidden;
+	position: relative;
+}
+
+.track_title_text, .track_title_text_scroll_helper {
+	white-space: nowrap;
+	position: absolute;
 }
 
 .controls img {
