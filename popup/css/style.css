@@ -63,7 +63,7 @@ body {
 	width: 50px;
 }
 
-.ui-slider {
+.seekbar_container, .volume_slider {
 	position: relative;
 	top: 3.5px;
 }
@@ -87,7 +87,7 @@ body {
 }
 
 .seekbar {
-	width: 150px;
+	width: 160px;
 }
 
 .track_image {

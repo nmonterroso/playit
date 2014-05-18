@@ -158,7 +158,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 					chrome.query(chrome.type_playlist, 'reorder', new_order);
 				};
 
-				$scope.transform_time = function(time) {
+				$scope.format_time = function(time) {
 					// get hours
 					var hours = Math.floor(time / (60*60));
 					var minutes = Math.floor((time % (60*60))/60);
@@ -205,6 +205,26 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							stop: function() {
 								seekbar.data('seekbar_active', false);
 							}
+						});
+
+						seekbar
+							.mousemove(function(e){
+								var current_seekbar = $('.seekbar:visible');
+								var percentage = (e.pageX - current_seekbar.offset().left) / current_seekbar.width();
+								var current_time = percentage*$scope.track_status.duration.total;
+
+								if (current_time > $scope.track_status.duration.total) {
+									current_time = $scope.track_status.duration.total;
+								}
+
+								var formatted_current = $scope.format_time(current_time);
+								var formatted_total = $scope.format_time($scope.track_status.duration.total);
+
+								seekbar.tooltip('option', 'content', formatted_current+' / '+formatted_total);
+							});
+
+						var seekbar_tooltip = $('.seekbar_tooltip').tooltip({
+							track: true
 						});
 
 						var volume_slider = $(element).find('.volume_slider').slider({
