@@ -1,14 +1,9 @@
-define(['backbone', 'underscore'], function(Backbone, _) {
+define(['backbone'], function(Backbone) {
 	'use strict';
 
 	return Backbone.Model.extend({}, {
 		player: null,
 		current_player_state: 'stop',
-		dispatcher: _.clone(Backbone.Events),
-		event_types: {
-			playback_complete: 'playback_complete',
-			set_volume: 'set_volume'
-		},
 		default_state: {
 			state: 'stop',
 			duration: {

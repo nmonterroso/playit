@@ -16,6 +16,7 @@ require.config({
 		'playit': 'models/playit',
 		'playlist': 'models/playlist',
 		'chrome_service': 'models/chrome_service',
+		'events': 'util/events',
 
 		// collections
 		'collections/abstract': 'collections/abstract',

@@ -2,10 +2,10 @@ define(
 	[
 		'underscore',
 		'backbone',
-		'collections/track',
-		'tracks/abstract'
+		'events',
+		'collections/track'
 	],
-	function(_, Backbone, track_collection, abstract_track) {
+	function(_, Backbone, events, track_collection) {
 		'use strict';
 
 		var playlist = Backbone.Model.extend({
@@ -15,10 +15,9 @@ define(
 			},
 			tracks: track_collection,
 			initialize: function() {
-				var self = this;
-				this.tracks.dispatcher.on(abstract_track.event_types.unplayable, function(track) {
-					self.remove(track.id);
-				});
+				events.dispatcher.on(events.event_types.track.unplayable, function(track) {
+					this.remove(track.id);
+				}, this);
 			},
 			list: function() {
 				return this.get('list');
@@ -84,6 +83,10 @@ define(
 				}
 			},
 			remove: function(id) {
+				if (_.indexOf(this.list(), id) == -1) {
+					return;
+				}
+
 				if (id == this.current()) {
 					var new_current = this.next_index();
 					if (!new_current) {

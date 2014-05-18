@@ -12,7 +12,6 @@ define(
 
 		var collection = new (abstract_collection.extend({
 			localStorage: new localstorage('tracks'),
-			dispatcher: _.clone(Backbone.Events),
 			initialize: function() {
 				this.on('remove', function(track) {
 					this.sync('delete', track);
