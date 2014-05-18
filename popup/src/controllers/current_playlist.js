@@ -215,40 +215,57 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							}
 						});
 
+						var scroll_track_title = function(track_id) {
+							var track_title = $('#track-'+track_id).find('.track_title');
+							var title = track_title.find('.track_title_text');
+							var container_width = track_title.width();
+							var title_width = title.width();
+
+							if (title_width > container_width) {
+								var helper =
+									track_title
+										.find('.track_title_text_scroll_helper')
+										.css({ left: container_width })
+										.text(title.text());
+								var duration = title_width*10;
+								var initial_distance = title_width-(container_width * .75);
+								var secondary_duration = (title_width-initial_distance)*(duration/initial_distance);
+								var helper_duration = container_width*((duration+secondary_duration)/title_width);
+
+								title.stop().animate({ left: -initial_distance }, duration, 'linear', function() {
+									title.animate({ left: -title_width }, secondary_duration, 'linear');
+									helper.animate({ left: 0 }, helper_duration, 'linear', function() {
+										title.css({ left: 0 });
+										scroll_track_title(track_id);
+									});
+								});
+							}
+						};
+
+						var clear_track_title_scroll = function(track_id) {
+							var track_title = $('#track-'+track_id).find('.track_title');
+							track_title
+								.find('.track_title_text')
+									.stop()
+									.animate({ left: 0 }, 200)
+								.end()
+								.find('.track_title_text_scroll_helper')
+									.stop()
+									.text('');
+						};
+
 						$(element).find('.track_title').hover(
 							function() { // in
-								var title = $(this).find('.track_title_text');
-								var container_width = $(this).width();
-								var title_width = title.width();
-
-								if (title_width > container_width) {
-									var helper =
-										$(this)
-											.find('.track_title_text_scroll_helper')
-												.css({ left: container_width })
-												.text(title.text());
-									var duration = title_width*5;
-									var initial_distance = title_width-(container_width * .75);
-									var secondary_duration = (title_width-initial_distance)*(duration/initial_distance);
-									var helper_duration = container_width*((duration+secondary_duration)/title_width);
-
-									title.stop().animate({ left: -initial_distance }, duration, 'linear', function() {
-										title.animate({ left: -title_width }, secondary_duration, 'linear');
-										helper.animate({ left: 0 }, helper_duration, 'linear', function() {
-											title.css({ left: 0 });
-											$(this).trigger('mouseenter');
-										});
-									});
+								var track_id = $(this).closest('.track').attr('id').split('track-')[1];
+								if (track_id != $scope.playlist.current_track) {
+									scroll_track_title(track_id);
 								}
 							}, function() { // out
-								$(this)
-									.find('.track_title_text')
-										.stop()
-										.animate({ left: 0 }, 0)
-									.end()
-									.find('.track_title_text_scroll_helper')
-										.stop()
-										.text('');
+								var track_id = $(this).closest('.track').attr('id').split('track-')[1];
+								if (track_id != $scope.playlist.current_track) {
+									clear_track_title_scroll(track_id);
+								}
+
 							}
 						);
 
@@ -267,6 +284,14 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							$.scrollTo('#track-'+$scope.playlist.current_track, {
 								duration: 200
 							});
+
+							_.each($scope.playlist.track_list, function(track) {
+								clear_track_title_scroll(track.id)
+							});
+
+							setTimeout(function() {
+								scroll_track_title($scope.playlist.current_track);
+							}, 1000);
 						});
 					});
 				}
