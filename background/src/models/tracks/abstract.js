@@ -44,7 +44,7 @@ define(['underscore', 'backbone', 'events', 'players/jplayer', 'players/ytplayer
 			events.dispatcher.trigger(events.event_types.track.ready+this.id, this);
 		},
 		player: function() {
-			var player;
+			var player = null;
 
 			switch (this.play_type()) {
 				case abstract_track.play_type_jplayer:

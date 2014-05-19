@@ -4,10 +4,7 @@ define(['playit', 'chrome_service'], function(playit, chrome_service) {
 	chrome_service.set_playit(playit);
 
 	chrome.contextMenus.onClicked.addListener(function(item) {
-		var clear = item.menuItemId == 'now';
-		var next = item.menuItemId == 'next';
-
-		playit.play(item.linkUrl, next, clear);
+		playit.add(item.linkUrl, item.menuItemId);
 	});
 
 	chrome.runtime.onConnect.addListener(function(port) {

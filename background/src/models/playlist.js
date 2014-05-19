@@ -26,7 +26,8 @@ define(
 				return this.get('current_track');
 			},
 			current_index: function() {
-				return _.indexOf(this.list(), this.current());
+				var index = _.indexOf(this.list(), this.current());
+				return index == -1 ? 0 : index;
 			},
 			next_index: function() {
 				var current = this.current_index();
@@ -60,7 +61,7 @@ define(
 
 				return this.tracks.get(this.current());
 			},
-			add: function(url, next) {
+			add: function(url, when) {
 				var track = this.tracks.create_track(url);
 
 				if (track == null) {
@@ -69,15 +70,28 @@ define(
 				}
 
 				var list = _.clone(this.list());
-				if (next && list.length > 1) {
-					list.splice(1, 0, track.id);
-				} else {
-					list.push(track.id);
+				switch (when) {
+					case 'next':
+						list.splice(1, 0, track.id);
+						break;
+					case 'last':
+						list.push(track.id);
+						break;
+					case 'now':
+						var current_track = this.track();
+						if (current_track) {
+							current_track.player().stop();
+						}
+
+						list.splice(this.current_index(), 0, track.id);
+						break;
+					default:
+						throw 'unknown add usage: "'+when+'"';
 				}
 
 				this.set({ list: list });
 
-				if (this.list().length == 1) {
+				if (this.list().length == 1 || when == 'now') {
 					this.set_current(track);
 					this.play();
 				}

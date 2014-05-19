@@ -42,12 +42,8 @@ define(
 			clear: function() {
 				this.playlist().clear();
 			},
-			play: function(url, next, clear) {
-				if (clear) {
-					this.clear();
-				}
-
-				this.playlist().add(url, next);
+			add: function(url, when) {
+				this.playlist().add(url, when);
 			},
 			play_at: function(index) {
 				this.playlist().play_at(index);
