@@ -6,8 +6,9 @@ define(
 		'collections/abstract',
 		'tracks/mixing.dj',
 		'tracks/zippyshare.com',
+		'tracks/youtube.com',
 	],
-	function(_, Backbone, localstorage, abstract_collection, mixing_dj, zippyshare) {
+	function(_, Backbone, localstorage, abstract_collection, mixing_dj, zippyshare, youtube) {
 		'use strict';
 
 		var collection = new (abstract_collection.extend({
@@ -22,7 +23,7 @@ define(
 					throw "missing source url";
 				}
 
-				var detected_type = _.find([mixing_dj, zippyshare], function(track_type) {
+				var detected_type = _.find([mixing_dj, zippyshare, youtube], function(track_type) {
 					return track_type.can_play(attrs.source_url);
 				});
 
