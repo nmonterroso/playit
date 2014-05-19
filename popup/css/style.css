@@ -1,6 +1,23 @@
 body {
-	width: 450px;
+	width: 465px;
 	font-family: Helvetica,"Times New Roman",Serif;
+	margin: 0;
+}
+
+#current_playlist {
+	height: 375px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.track {
+	padding: 5px 8px;
+	background: white;
+}
+
+.current_track {
+	background: #e4e4e4;
+	font-weight: bold;
 }
 
 .left {
@@ -26,13 +43,9 @@ body {
 	margin-right: 10px;
 }
 
-#current_playlist > div {
-	padding: 5px 0;
-}
-
 .track_data {
 	position: relative;
-	width: 300px;
+	width: 280px;
 	height: 65px;
 }
 
@@ -50,25 +63,31 @@ body {
 	width: 50px;
 }
 
-.ui-slider {
+.seekbar_container, .volume_slider {
 	position: relative;
 	top: 3.5px;
 }
 
-.track_title:hover {
+.track_title {
 	cursor: pointer;
+	font-size: 11pt;
+	height: 13pt;
+	overflow: hidden;
+	position: relative;
+}
+
+.track_title_text, .track_title_text_scroll_helper {
+	white-space: nowrap;
+	position: absolute;
 }
 
 .controls img {
-	width: 16px;
-}
-
-.controls img:hover {
+	width: 12px;
 	cursor: pointer;
 }
 
 .seekbar {
-	width: 150px;
+	width: 160px;
 }
 
 .track_image {
@@ -79,8 +98,10 @@ body {
 
 .track_image_link {
 	opacity: 0.01;
+	cursor: pointer;
 }
 
-.track_image_link:hover {
-	cursor: pointer;
+.volume_control img {
+	position: relative;
+	top: 2px;
 }

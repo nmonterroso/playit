@@ -9,6 +9,9 @@ define(['q', 'jquery', 'tracks/abstract'], function(Q, $, abstract_track) {
 			return url.match(this.page_regex) != null;
 		},
 		parse_page: function(page) {
+			return this.parse_somd(page) || this.parse_from_button(page);
+		},
+		parse_somd: function(page) {
 			var somd_match = page.match(/somdfunction =([\s\S]*?)<\/script>/);
 
 			if (somd_match != null) {
@@ -20,6 +23,18 @@ define(['q', 'jquery', 'tracks/abstract'], function(Q, $, abstract_track) {
 				var get_href = new Function("'use strict'; return ("+somd_func+")()");
 				return get_href();
 			}
+
+			return null;
+		},
+		parse_from_button: function(page) {
+			var button_match = page.match(/document\.getElementById\('dlbutton'\)\.href\s+=(.*?);/);
+
+			if (button_match != null) {
+				var get_href = new Function("'use strict'; return "+button_match[1]);
+				return get_href();
+			}
+
+			return null;
 		}
 	});
 

@@ -1,10 +1,11 @@
-<div ng-repeat="track in playlist.track_list" id="track-{{track.id}}" ng-class-even="'even'" ng-class-odd="'odd'">
+<div ng-repeat="track in playlist.track_list" id="track-{{track.id}}" class="track">
   <div class="left track_image" style="background-image: url({{track.image}});">
     <img class="track_image_link" src="{{track.image}}" ng-click="play_track(track.id)"/>
   </div>
   <div class="left track_data">
     <div class="track_title" ng-click="play_track(track.id)">
-      {{track.title}}
+      <div class="track_title_text">{{track.title}}</div>
+      <div class="track_title_text_scroll_helper"></div>
     </div>
     <div ng-show="playlist.current_track == track.id">
       <div class="controls">
@@ -14,7 +15,7 @@
           <img src="/popup/images/player/pause.png" ng-click="pause()" ng-show="track_status.state == 'play'"/>
         </div>
         <div class="left seekbar_container">
-          <div class="seekbar"></div>
+          <div class="seekbar seekbar_tooltip" title=""></div>
         </div>
         <div class="left volume_control">
           <div class="left" style="margin: 0 5px 0 10px;">

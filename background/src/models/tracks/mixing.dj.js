@@ -1,4 +1,4 @@
-define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, $, abstract_track, zippy) {
+define(['q', 'jquery', 'underscore', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, $, _, abstract_track, zippy) {
 	'use strict';
 
 	return abstract_track.extend({
@@ -18,7 +18,7 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 
 					var title_matches = set_page.match(/<title>(.*?) Live Sets/);
 					if (title_matches) {
-						title = title_matches[1];
+						title = _.unescape(title_matches[1]);
 					}
 
 					var image_matches = set_page.match(/<link rel="image_src" href="(.*?)" \/>/);
@@ -31,6 +31,10 @@ define(['q', 'jquery', 'tracks/abstract', 'tracks/zippyshare.com'], function(Q, 
 				})
 				.then(function(page) {
 					var mp3_href = zippy.parse_page(page);
+
+					if (mp3_href == null) {
+						throw "unable to determine mixing.dj/zippy play url";
+					}
 
 					self.set({
 						play_url: zippy_root+mp3_href,

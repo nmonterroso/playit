@@ -108,8 +108,8 @@ define(
 				return {
 					state: this.current_player_state,
 					duration: {
-						current: abstract_player.format_time(status.currentTime),
-						total: abstract_player.format_time(status.duration)
+						current: status.currentTime,
+						total: status.duration
 					},
 					volume: {
 						level: this.player.jPlayer('option', 'volume')*100,

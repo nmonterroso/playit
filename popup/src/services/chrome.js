@@ -1,6 +1,6 @@
 define(['angular'], function(ng) {
 	ng.module('playit.services')
-		.factory('chrome_service', ['$rootScope', function($rootScope) {
+		.factory('chrome_service', ['$rootScope', '$q', function($rootScope, $q) {
 			var port = chrome.runtime.connect({ name: 'popup' });
 			port.onMessage.addListener(function(message) {
 				if (!message.id) {
@@ -25,6 +25,8 @@ define(['angular'], function(ng) {
 			this.type_track_player = 'track_player';
 
 			this.query = function() {
+				var deferred = $q.defer();
+
 				var guid = this.generate_guid();
 				var type = arguments[0];
 				var func = arguments[1];
@@ -36,15 +38,17 @@ define(['angular'], function(ng) {
 					args = _.initial(args, 1);
 				}
 
-				if (cb !== null) {
-					var proxy = function(message) {
-						if (message.id == guid) {
+				var proxy = function(message) {
+					if (message.id == guid) {
+						if (cb != null) {
 							cb(message.body);
-							port.onMessage.removeListener(proxy);
 						}
-					};
-					port.onMessage.addListener(proxy);
-				}
+
+						deferred.resolve(message.body);
+						port.onMessage.removeListener(proxy);
+					}
+				};
+				port.onMessage.addListener(proxy);
 
 				port.postMessage({
 					id: guid,
@@ -52,6 +56,8 @@ define(['angular'], function(ng) {
 					func: func,
 					args: args
 				});
+
+				return deferred.promise;
 			};
 
 			return this;
