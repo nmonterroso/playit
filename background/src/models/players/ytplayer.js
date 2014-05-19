@@ -50,7 +50,7 @@ define(
 								'onStateChange': function(e) {
 									if (e.data == YT.PlayerState.ENDED) {
 										self.current_player_state = self.player_state.stop;
-										abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
+										events.dispatcher.trigger(events.event_types.playback.complete);
 									}
 								}
 							}
