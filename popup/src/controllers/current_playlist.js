@@ -19,12 +19,12 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 							$scope.playlist = playlist;
 							$scope.ready = true;
 
-							refresh_track(true);
+							refresh_track();
 						});
 				};
 
-				var refresh_track = function(apply_volume) {
-					apply_volume = apply_volume || false;
+				var refresh_track = function() {
+					var apply_volume = true;
 					if (status_interval) {
 						$interval.cancel(status_interval);
 					}
@@ -193,6 +193,7 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 
 					if (track != null) {
 						$scope.playlist.current_track = track_id;
+						refresh_track();
 					}
 				});
 
