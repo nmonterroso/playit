@@ -11,7 +11,8 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 			},
 			track: {
 				ready: 'track_ready',
-				unplayable: 'track_unplayable'
+				unplayable: 'track_unplayable',
+				change: 'track_change'
 			}
 		}
 	}))();

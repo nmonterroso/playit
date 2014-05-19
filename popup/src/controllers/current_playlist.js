@@ -182,6 +182,20 @@ define(['angular', 'underscore', 'jquery', 'jquery-ui', 'jquery-scrollTo'], func
 					return time_display.join(':');
 				};
 
+				$rootScope.$on('track_change', function(event, track_id) {
+					if ($scope.playlist.current_track == track_id) {
+						return;
+					}
+
+					var track = _.find($scope.playlist.track_list, function(track) {
+						return track.id == track_id;
+					});
+
+					if (track != null) {
+						$scope.playlist.current_track = track_id;
+					}
+				});
+
 				refresh_list();
 			}
 		])

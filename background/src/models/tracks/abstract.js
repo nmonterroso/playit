@@ -59,6 +59,7 @@ define(['underscore', 'backbone', 'events', 'players/jplayer', 'players/ytplayer
 		},
 		play: function() {
 			this.ready(function(self) {
+				events.dispatcher.trigger(events.event_types.track.change, self.id);
 				self.player().play(self.play_url());
 			});
 		},
