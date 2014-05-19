@@ -13,7 +13,9 @@ define(
 		});
 
 		return abstract_player.extend({}, {
+			is_player_ready: false,
 			curr_video_id: '',
+
 			play: function(url) {
 				var self = this;
 
@@ -39,12 +41,16 @@ define(
 							width: '640',
 							events: {
 								'onReady': function(e) {
+									self.is_player_ready = true;
 									self.player.setPlaybackQuality("small");
 									self.player.setVolume(default_volume);
 									cb();
 								},
 								'onStateChange': function(e) {
-									console.log(e);
+									if (e.data == YT.PlayerState.ENDED) {
+										self.current_player_state = self.player_state.stop;
+										abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
+									}
 								}
 							}
 						});
@@ -110,7 +116,7 @@ define(
 				this.player.unMute();
 			},
 			track_state: function() {
-				if (this.player == null) {
+				if (!this.is_player_ready) {
 					return abstract_player.default_state;
 				}
 
