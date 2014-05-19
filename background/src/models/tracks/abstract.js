@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], function(_, Backbone, jplayer, ytplayer) {
+define(['underscore', 'backbone', 'events', 'players/jplayer', 'players/ytplayer'], function(_, Backbone, events, jplayer, ytplayer) {
 	'use strict';
 
 	var abstract_track = Backbone.Model.extend({
@@ -11,8 +11,8 @@ define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], functi
 			title: null
 		},
 		initialize: function() {
-			this.dispatcher = _.clone(Backbone.Events);
 			this.preparing = false;
+			events.dispatcher.on(events.event_types.playback.failed, this.on_playback_failed, this);
 			this.ready(function(track) {}); // kick it
 		},
 		source_url: function() {
@@ -27,12 +27,21 @@ define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], functi
 				return;
 			}
 
-			this.dispatcher.on(abstract_track.event_types.ready, callback);
+			events.dispatcher.once(events.event_types.track.ready+this.id, callback);
 
 			if (!this.preparing) {
 				this.preparing = true;
 				this.prepare();
 			}
+		},
+		set_ready: function(play_url, title, image) {
+			this.set({
+				play_url: play_url,
+				ready: true,
+				title: title || null,
+				image: image || null
+			});
+			events.dispatcher.trigger(events.event_types.track.ready+this.id, this);
 		},
 		player: function() {
 			var player;
@@ -59,7 +68,14 @@ define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], functi
 		unplayable: function() {
 			console.error("unable to play track from "+this.source_url());
 			this.set('unplayable', true);
-			this.collection.dispatcher.trigger(abstract_track.event_types.unplayable, this);
+			events.dispatcher.trigger(events.event_types.track.unplayable, this);
+		},
+		on_playback_failed: function(url, play_type, error) {
+			if (url != this.play_url() || play_type != this.play_type()) {
+				return;
+			}
+
+			this.playback_failed(error);
 		},
 
 		// abstract methods
@@ -68,14 +84,13 @@ define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], functi
 		},
 		start: function() {
 			abstract_track.unimplemented('start');
+		},
+		playback_failed: function(error) {
+			abstract_track.unimplemented('playback_failed');
 		}
 	}, {
 		play_type_jplayer: 'jplayer',
 		play_type_youtube: 'youtube',
-		event_types: {
-			ready: 'ready',
-			unplayable: 'unplayable'
-		},
 		unimplemented: function(method) {
 			console.error('unimplemented method:', method);
 			throw '';

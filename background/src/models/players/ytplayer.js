@@ -1,14 +1,15 @@
 define(
 	[
 		'jquery',
-		'players/abstract'
+		'players/abstract',
+		'events'
 	],
-	function($, abstract_player) {
+	function($, abstract_player, events) {
 		'use strict';
 
 		var default_volume = 80;
 
-		abstract_player.dispatcher.on(abstract_player.event_types.set_volume, function(level) {
+		events.dispatcher.on(events.event_types.set_volume, function(level) {
 			default_volume = level;
 		});
 

@@ -36,13 +36,7 @@ define(['q', 'jquery', 'underscore', 'tracks/abstract', 'tracks/zippyshare.com']
 						throw "unable to determine mixing.dj/zippy play url";
 					}
 
-					self.set({
-						play_url: zippy_root+mp3_href,
-						ready: true,
-						title: title,
-						image: image
-					});
-					self.dispatcher.trigger(abstract_track.event_types.ready, self);
+					self.set_ready(zippy_root+mp3_href, title, image);
 				})
 				.catch(function(e) {
 					self.unplayable();
@@ -50,6 +44,10 @@ define(['q', 'jquery', 'underscore', 'tracks/abstract', 'tracks/zippyshare.com']
 				.finally(function() {
 					self.preparing = false;
 				});
+		},
+		playback_failed: function(error) {
+			this.set({ ready: false });
+			this.play();
 		}
 	}, {
 		can_play: function(url) {

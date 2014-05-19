@@ -2,9 +2,10 @@ define(
 	[
 		'jquery',
 		'players/abstract',
+		'events',
 		'jquery.jplayer'
 	],
-	function($, abstract_player) {
+	function($, abstract_player, events) {
 		'use strict';
 
 		var default_volume = .8;
@@ -12,7 +13,7 @@ define(
 			return level / 100;
 		};
 
-		abstract_player.dispatcher.on(abstract_player.event_types.set_volume, function(level) {
+		events.dispatcher.on(events.event_types.set_volume, function(level) {
 			default_volume = convert_volume(level);
 		});
 
@@ -38,7 +39,10 @@ define(
 						swfPath: '/background/src/vendor/Jplayer.swf',
 						ended: function(){
 							self.current_player_state = self.player_state.stop;
-							abstract_player.dispatcher.trigger(abstract_player.event_types.playback_complete);
+							events.dispatcher.trigger(events.event_types.playback.complete);
+						},
+						error: function(e) {
+							events.dispatcher.trigger(events.event_types.playback.failed, url, 'jplayer', e.jPlayer.error);
 						}
 					});
 				} else {

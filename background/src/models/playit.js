@@ -2,10 +2,10 @@ define(
 	[
 		'backbone',
 		'localstorage',
-		'collections/playlist',
-		'players/abstract'
+		'events',
+		'collections/playlist'
 	],
-	function(Backbone, localstorage, playlist_collection, abstract_player) {
+	function(Backbone, localstorage, events, playlist_collection) {
 		'use strict';
 
 		return new (Backbone.Model.extend({
@@ -28,11 +28,12 @@ define(
 					this.sync('update', player);
 				}, this);
 
-				abstract_player.dispatcher.on(abstract_player.event_types.playback_complete, this.play_next, this);
-				abstract_player.dispatcher.trigger(abstract_player.event_types.set_volume, this.get('volume'));
+				events.dispatcher.on(events.event_types.playback.complete, this.play_next, this);
+				events.dispatcher.trigger(events.event_types.set_volume, this.get('volume'));
 			},
 			set_volume: function(level) {
 				this.set('volume', level);
+				events.dispatcher.trigger(events.event_types.set_volume, this.get('volume'));
 				this.playlist().track().player().volume(level);
 			},
 			playlist: function() {

@@ -9,13 +9,7 @@ define(['q', 'jquery', 'tracks/abstract'], function(Q, $, abstract_track) {
 			Q($.ajax("https://gdata.youtube.com/feeds/api/videos/" + play_url + "?v=2&alt=json",
 				{ dataType: "json" }))
 				.then(function(video_info) {
-					self.set({
-						play_url: play_url,
-						ready: true,
-						title: video_info.entry.title.$t,
-						image: video_info.entry.media$group.media$thumbnail[0].url
-					});
-					self.dispatcher.trigger(abstract_track.event_types.ready, self);
+					self.set_ready(play_url, video_info.entry.title.$t, video_info.entry.media$group.media$thumbnail[0].url);
 				})
 				.catch(function(e) {
 					self.unplayable();
