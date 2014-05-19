@@ -32,18 +32,8 @@ define(['angular'], function(ng) {
 				var func = arguments[1];
 				var args = _.rest(arguments, 2);
 
-				var cb = null;
-				if (args.length > 0 && typeof args[args.length - 1] == 'function') {
-					cb = args[args.length-1];
-					args = _.initial(args, 1);
-				}
-
 				var proxy = function(message) {
 					if (message.id == guid) {
-						if (cb != null) {
-							cb(message.body);
-						}
-
 						deferred.resolve(message.body);
 						port.onMessage.removeListener(proxy);
 					}
