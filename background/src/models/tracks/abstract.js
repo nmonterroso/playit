@@ -1,4 +1,4 @@
-define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jplayer) {
+define(['underscore', 'backbone', 'players/jplayer', 'players/ytplayer'], function(_, Backbone, jplayer, ytplayer) {
 	'use strict';
 
 	var abstract_track = Backbone.Model.extend({
@@ -42,8 +42,7 @@ define(['underscore', 'backbone', 'players/jplayer'], function(_, Backbone, jpla
 					player = jplayer;
 					break;
 				case abstract_track.play_type_youtube:
-					console.log('playing in youtube', self.source_url());
-					return;
+					player = ytplayer;
 					break;
 			}
 

@@ -26,10 +26,12 @@ require.config({
 		'tracks/abstract': 'models/tracks/abstract',
 		'tracks/mixing.dj': 'models/tracks/mixing.dj',
 		'tracks/zippyshare.com': 'models/tracks/zippyshare.com',
+		'tracks/youtube.com': 'models/tracks/youtube.com',
 
 		// players
 		'players/abstract': 'models/players/abstract',
-		'players/jplayer': 'models/players/jplayer'
+		'players/jplayer': 'models/players/jplayer',
+		'players/ytplayer': 'models/players/ytplayer'
 	},
 	'shim': {
 		'swfobject': {

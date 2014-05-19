@@ -11,11 +11,13 @@
 	"background": {
 		"page": "background/background.html"
 	},
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://www.youtube.com/iframe_api https://s.ytimg.com; object-src 'self'",
 	"permissions": [
 		"contextMenus",
 		"*://youtube.com/watch?v=*",
 		"*://*.youtube.com/watch?v=*",
+		"*://youtube.com/v/*",
+		"*://*.youtube.com/v/*",
 		"http://mixing.dj/*/livesets/*",
 		"http://*.zippyshare.com/v/*/file.html"
 	]
