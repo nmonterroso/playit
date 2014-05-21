@@ -16,7 +16,7 @@ define(['q', 'jquery', 'underscore', 'tracks/abstract', 'tracks/zippyshare.com']
 						throw "unable to determine mixing.dj track";
 					}
 
-					var title_matches = set_page.match(/<title>(.*?) Live Sets/);
+					var title_matches = set_page.match(/<title>(.*?)<\/title>/);
 					if (title_matches) {
 						title = _.unescape(title_matches[1]);
 					}
