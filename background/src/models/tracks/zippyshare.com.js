@@ -12,10 +12,10 @@ define(['q', 'jquery', 'tracks/abstract'], function(Q, $, abstract_track) {
 			return this.parse_somd(page) || this.parse_from_button(page);
 		},
 		parse_somd: function(page) {
-			var somd_match = page.match(/somdfunction =([\s\S]*?)<\/script>/);
+			var somd_match = page.match(/som(d|f)function =([\s\S]*?)<\/script>/);
 
 			if (somd_match != null) {
-				var somd_func = somd_match[1]
+				var somd_func = somd_match[2]
 					.replace(/document\.getElementById\('dlbutton'\)\.omg/, 'var url') // replace initial set
 					.replace(/document\.getElementById\('dlbutton'\)\.omg/, 'url') // replace parseInt() call
 					.replace(/document\.getElementById\('dlbutton'\)\.href\s+=/, 'return'); // return the results
